@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TETAP BERGERAK</title>
+  <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      background: linear-gradient(135deg, #d0f0fd, #a6d8f7);
+      color: #1a1a1a;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem 1.5rem 4rem;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Logo container */
+    .logo-container {
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    .logo-container img {
+      max-width: 180px;
+      width: 100%;
+      height: auto;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .logo-container img:hover,
+    .logo-container img:focus {
+      transform: scale(1.05);
+      outline: none;
+    }
+
+    /* Title */
+    h1 {
+      font-weight: 700;
+      font-size: 2.4rem;
+      margin-bottom: 0.25rem;
+      color: #800080;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      user-select: none;
+      text-align: center;
+    }
+    /* Subtitle below title */
+    .subtitle {
+      font-weight: 500;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      color: #800080;
+      user-select: none;
+      text-align: center;
+      font-style: italic;
+      letter-spacing: 0.03em;
+    }
+     .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+    /* Container for points */
+    .points {
+      width: 100%;
+      max-width: 480px;
+      background: #ffffffcc;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      padding: 1.8rem 2rem;
+      user-select: none;
+    }
+
+    /* Each point as button */
+    .point-btn {
+      width: 100%;
+      background: #800080;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 1rem 1.25rem 1rem 4.5rem;
+      font-size: 1.25rem;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(58, 134, 255, 0.5);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      margin-bottom: 0.75rem;
+      position: relative;
+    }
+    .point-btn:hover,
+    .point-btn:focus {
+      background: #265ecf;
+      box-shadow: 0 6px 14px rgba(44, 108, 209, 0.7);
+      outline: none;
+    }
+
+    /* Arrow icon */
+    .arrow {
+      display: inline-block;
+      transition: transform 0.3s ease;
+      font-weight: 900;
+      font-size: 1.3rem;
+      user-select: none;
+    }
+    .arrow.open {
+      transform: rotate(90deg);
+    }
+
+    /* Emoji container with circle background */
+    .emoji {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 32px;
+      height: 32px;
+      background-color: rgba(255 255 255 / 0.8);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      user-select: none;
+      animation: floatUpDown 2.5s ease-in-out infinite;
+      line-height: 1;
+      pointer-events: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    }
+
+    /* Animation for emoji up/down */
+    @keyframes floatUpDown {
+      0%, 100% {
+        transform: translateY(-50%) translateY(0);
+      }
+      50% {
+        transform: translateY(-50%) translateY(-6px);
+      }
+    }
+
+    /* Content under each point */
+    .point-content {
+      background: #e7f1ff;
+      border-radius: 0 0 12px 12px;
+      margin-bottom: 1.5rem;
+      padding: 0.75rem 1.5rem 1rem 2rem;
+      color: #054a91;
+      font-size: 1rem;
+      line-height: 1.45;
+      box-shadow: inset 2px 2px 8px rgba(0, 0, 0, 0.06);
+      user-select: text;
+      display: none;
+    }
+
+    /* List inside content */
+    .point-content ul {
+      margin: 0 0 0.75rem 1.3rem;
+      padding: 0;
+      list-style-type: disc;
+    }
+
+    /* Detail button inside content */
+    .detail-btn {
+      font-weight: 600;
+      font-size: 0.9rem;
+      background: transparent;
+      border: 2px solid #3a86ff;
+      color: #3a86ff;
+      padding: 0.3rem 0.9rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      user-select: none;
+      display: inline-block;
+      text-decoration: none;
+      font-family: inherit;
+    }
+    .detail-btn:hover,
+    .detail-btn:focus {
+      background: #3a86ff;
+      color: white;
+      outline: none;
+    }
+
+    /* Footer with social buttons */
+    footer {
+      position: fixed;
+      bottom: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 1rem;
+      z-index: 100;
+    }
+
+    /* Social button base */
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      color: white;
+      text-decoration: none;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .social-btn:focus,
+    .social-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+      outline: none;
+    }
+
+    /* WhatsApp button */
+    .whatsapp {
+      background-color: #25D366;
+    }
+    /* Instagram button */
+    .instagram {
+      background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    }
+
+    /* SVG icon styling */
+    svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+    }
+
+    /* Responsive font scaling */
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2rem;
+      }
+      .subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+      }
+      .points {
+        padding: 1.2rem 1.5rem;
+      }
+      .point-btn {
+        font-size: 1.1rem;
+        padding: 0.85rem 1rem 0.85rem 4.2rem;
+      }
+      .detail-btn {
+        font-size: 0.85rem;
+        padding: 0.25rem 0.7rem;
+      }
+      footer {
+        bottom: 0.8rem;
+        gap: 0.8rem;
+      }
+      .social-btn {
+        width: 42px;
+        height: 42px;
+      }
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+      .emoji {
+        width: 28px;
+        height: 28px;
+        font-size: 1.4rem;
+        left: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="https://muin123-dr.github.io/Website/gen%20zehat.png" class="logo-container" target="_blank" rel="noopener noreferrer" aria-label="Logo KUNCI SEHAT">
+    <img src="https://muin123-dr.github.io/Website/gen%20zehat.png" alt="Logo KUNCI SEHAT" />
+  </a>
+
+  <h1>TETAP BERGERAK</h1>
+  <p class="subtitle">Bergerak adalah jalan menuju Hidup Sehat.</p>
+
+  <main class="points" role="main" aria-label="Kunci Sehat Points">
+    <button class="point-btn" aria-expanded="false" aria-controls="content-makan" id="btn-makan">
+      <span class="emoji" aria-hidden="true" title="Makan yang Sehat">🏃🏻</span>
+      Mengapa Tubuh Butuh Gerak
+      <span class="arrow" aria-hidden="true">&#9654;</span>
+    </button>
+    <div class="point-content" id="content-makan" role="region" aria-labelledby="btn-makan">
+      <ul>
+        <li>Manfaat fisik</li>
+        <li>Manfaat Mental dan Emosi</li>
+      </ul>
+      <a href="#" class="detail-btn" aria-label="Lebih detail tentang Makan yang Sehat" data-link="makan-sehat.html">lebih detail&gt;&gt;</a>
+    </div>
+
+    <button class="point-btn" aria-expanded="false" aria-controls="content-tidur" id="btn-tidur">
+      <span class="emoji" aria-hidden="true" title="Tidur yang Cukup">🎯</span>
+      Aktivitas Rekomended
+      <span class="arrow" aria-hidden="true">&#9654;</span>
+    </button>
+    <div class="point-content" id="content-tidur" role="region" aria-labelledby="btn-tidur">
+      <ul>
+        <li>Rekomendasi WHO</li>
+        <li>Jenis Aktivitas yang dianjurkan</li>
+      </ul>
+      <a href="#" class="detail-btn" aria-label="Lebih detail tentang Tidur yang Cukup" data-link="tidur-cukup.html">lebih detail&gt;&gt;</a>
+    </div>
+
+    <button class="point-btn" aria-expanded="false" aria-controls="content-bergerak" id="btn-bergerak">
+      <span class="emoji" aria-hidden="true" title="Tetap Bergerak">🚷</span>
+      Dampak Kurang Gerak
+      <span class="arrow" aria-hidden="true">&#9654;</span>
+    </button>
+    <div class="point-content" id="content-bergerak" role="region" aria-labelledby="btn-bergerak">
+      <ul>
+        <li>Dampak Global</li>
+        <li>Dampak Fisik</li>
+        <li>Dampak Mental</li>
+      </ul>
+      <a href="#" class="detail-btn" aria-label="Lebih detail tentang Tetap Bergerak" data-link="tetap-bergerak.html">lebih detail&gt;&gt;</a>
+    </div>
+  </main>
+
+  <footer>
+    <a href="https://whatsapp.com/channel/0029VbAtZNp47Xe6JFu65N2u" class="social-btn whatsapp" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Channel">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M20.52 3.48a11.9 11.9 0 00-16.84 0 11.89 11.89 0 00-3.5 8.42c0 2.1.55 4.15 1.6 5.95L2 22l4.25-1.4a11.83 11.83 0 005.95 1.6c4.46 0 8.6-2.8 10.02-7.07a11.9 11.9 0 00-1.7-10.65zm-8.2 14.6a9.52 9.52 0 01-4.8-1.3l-.35-.2-3 1 1-3.1-.23-.36a9.5 9.5 0 0115.7-11.2 9.48 9.48 0 01-7.3 14.3zm5.07-6.4c-.28-.14-1.67-.82-1.93-.91-.26-.1-.45-.14-.64.14s-.73.9-.9 1.08c-.16.18-.32.2-.6.07a7.8 7.8 0 01-2.3-1.42 8.8 8.8 0 01-1.63-2c-.18-.3 0-.46.13-.6.14-.14.3-.34.44-.5a1.76 1.76 0 00.26-.44c.09-.15.05-.27-.02-.4-.07-.13-.64-1.54-.88-2.1-.23-.55-.46-.48-.64-.49a1.2 1.2 0 00-.45-.02c-.15 0-.4.06-.6.3-.2.24-.77.75-.77 1.83s.79 2.12.9 2.28c.1.15 1.55 2.37 3.77 3.32a13.4 13.4 0 001.76.74 1.78 1.78 0 002.03-2.57z"/>
+      </svg>
+    </a>
+
+    <a href="https://www.instagram.com/dr.msmuin?igsh=MTY2NHZmODUydm1ycA==" class="social-btn instagram" target="_blank" rel="noopener noreferrer" aria-label="Instagram Profile">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M7.75 2h8.5A5.75 5.75 0 0122 7.75v8.5A5.75 5.75 0 0116.25 22h-8.5A5.75 5.75 0 012 16.25v-8.5A5.75 5.75 0 017.75 2zm0 1.5a4.25 4.25 0 00-4.25 4.25v8.5a4.25 4.25 0 004.25 4.25h8.5a4.25 4.25 0 004.25-4.25v-8.5a4.25 4.25 0 00-4.25-4.25h-8.5zm8.75 2.25a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5zM12 7a5 5 0 110 10 5 5 0 010-10zm0 1.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z"/>
+      </svg>
+    </a>
+  </footer>
+    <div class="subtitle">
+            <p>© 2025 Gen Zehat </p>
+            <p>🔅🔅🔅</p>
+            <p>Ikhtiar Sehat adalah bentuk rasa Syukur</p>
+    </div>
+  
+
+  <script>
+    // Toggle content showing/hiding on button click
+    document.querySelectorAll('.point-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        const contentId = button.getAttribute('aria-controls');
+        const content = document.getElementById(contentId);
+        const expanded = button.getAttribute('aria-expanded') === 'true';
+        if (expanded) {
+          content.style.display = 'none';
+          button.setAttribute('aria-expanded', 'false');
+          button.querySelector('.arrow').classList.remove('open');
+        } else {
+          content.style.display = 'block';
+          button.setAttribute('aria-expanded', 'true');
+          button.querySelector('.arrow').classList.add('open');
+        }
+      });
+    });
+
+    // (lebih detail>>) buttons open link in new tab
+    document.querySelectorAll('.detail-btn').forEach(button => {
+      button.addEventListener('click', e => {
+        e.preventDefault();
+        const link = button.dataset.link;
+        window.open(link, '_blank', 'noopener');
+      });
+    });
+  </script>
+</body>
+</html>
