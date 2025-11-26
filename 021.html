@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pentingnya Tidur Malam Berkualitas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #6b8cbc;
+            --accent-color: #ff9a76;
+            --light-color: #f5f7fa;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --item-bg-color: #e8ecf1; /* Warna background baru untuk item */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 0 0 20px 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid white;
+            box-shadow: var(--shadow);
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        /* --- Styles untuk Akordeon Utama (Main Sections) --- */
+        .main-accordion-section {
+            background-color: white;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .main-accordion-title {
+            padding: 20px;
+            cursor: pointer;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 15px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .main-accordion-title:hover {
+            background-color: var(--primary-color);
+        }
+        
+        .main-accordion-title h2 {
+            margin: 0;
+            padding: 0;
+            border-bottom: none;
+            color: white;
+            font-size: 1.3rem;
+            display: flex; /* Untuk menata emoji dan teks */
+            align-items: center;
+            gap: 10px; /* Jarak antara emoji dan teks */
+        }
+
+        .main-accordion-title h2 .emoji {
+            font-size: 1.5em; /* Ukuran emoji */
+            animation: bounce 2s infinite ease-in-out; /* Animasi */
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .toggle-icon-main {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .main-accordion-title.active .toggle-icon-main {
+            transform: rotate(180deg);
+        }
+
+        .main-accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+            padding: 0 20px;
+            border-radius: 0 0 15px 15px; /* Radius untuk konten */
+        }
+
+        .main-accordion-content.show {
+            max-height: 5000px; /* Nilai besar untuk menampung konten */
+            padding: 20px;
+            padding-top: 10px;
+            background-color: rgba(255, 255, 255, 0.9); /* Latar belakang konten akordeon utama */
+        }
+
+        /* --- Styles untuk Item Akordeon Bersarang --- */
+        .point-list {
+            list-style-type: none;
+            padding-top: 10px;
+        }
+        
+        .point-item {
+            margin-bottom: 12px;
+            padding: 15px;
+            background-color: var(--item-bg-color); /* Warna yang berbeda */
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .point-item:hover {
+            background-color: #dbe2e9;
+            transform: translateX(5px);
+        }
+        
+        .point-item.active {
+            background-color: #d2dae3;
+            border-left-color: var(--accent-color);
+        }
+        
+        .point-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .point-title .emoji {
+            margin-right: 8px; /* Jarak antara emoji dan teks pada sub-item */
+        }
+        
+        .point-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            padding-top: 0;
+        }
+        
+        .point-detail.show {
+            max-height: 1000px;
+            padding-top: 15px;
+        }
+        
+        .point-detail p, .point-detail ul {
+            margin-bottom: 10px;
+            color: #555;
+        }
+        
+        .point-detail ul {
+            padding-left: 20px;
+        }
+        
+        .point-detail li {
+            margin-bottom: 5px;
+        }
+        
+        .toggle-icon {
+            transition: var(--transition);
+        }
+        
+        .point-item.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        /* --- Styles untuk Tombol Navigasi --- */
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            padding: 15px 0;
+            border-top: 1px solid #ddd;
+        }
+
+        .nav-btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-btn:hover {
+            background-color: var(--accent-color);
+        }
+
+        /* --- Footer and Social Links (Existing) --- */
+        footer {
+      position: fixed;
+      bottom: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 1rem;
+      z-index: 100;
+    }
+
+    /* Social button base */
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      color: white;
+      text-decoration: none;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .social-btn:focus,
+    .social-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+      outline: none;
+    }
+
+    /* WhatsApp button */
+    .whatsapp {
+      background-color: #25D366;
+    }
+    /* Instagram button */
+    .instagram {
+      background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    }
+
+    /* SVG icon styling */
+    svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+    }
+
+    /* Responsive font scaling */
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2rem;
+      }
+      .subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+      }
+      .points {
+        padding: 1.2rem 1.5rem;
+      }
+      .point-btn {
+        font-size: 1.1rem;
+        padding: 0.85rem 1rem 0.85rem 4.2rem;
+      }
+      .detail-btn {
+        font-size: 0.85rem;
+        padding: 0.25rem 0.7rem;
+      }
+      footer {
+        bottom: 0.8rem;
+        gap: 0.8rem;
+      }
+      .social-btn {
+        width: 42px;
+        height: 42px;
+      }
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+      .emoji {
+        width: 28px;
+        height: 28px;
+        font-size: 1.4rem;
+        left: 0.9rem;
+      }
+    }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="https://muin123-dr.github.io/Website/gen%20zehat.png" alt="Logo Gen Zehat">
+        </div>
+        <h1>Pentingnya Tidur Malam Berkualitas</h1>
+        <p>Fondasi Kesehatan dan Kesejahteraan</p>
+    </header>
+    
+    <div class="container">
+        
+        <section class="main-accordion-section">
+            <div class="main-accordion-title" onclick="toggleMainSection(this)">
+                <h2><span class="emoji">✨</span> Manfaat Tidur Malam Berkualitas <i class="fas fa-chevron-down toggle-icon-main"></i></h2>
+            </div>
+            <div class="main-accordion-content">
+                <ul class="point-list">
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span class="emoji">🧠</span><span>Meningkatkan Fungsi Kognitif</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Tidur malam yang cukup mengoptimalkan kemampuan otak untuk memproses informasi, meningkatkan konsentrasi, daya ingat, dan keterampilan memecahkan masalah. Ini juga krusial untuk konsolidasi memori.</p>
+                        </div>
+                    </li>
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span class="emoji">💪</span><span>Mendukung Kesehatan Fisik</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Selama tidur, tubuh memperbaiki sel dan jaringan, memproduksi hormon penting, dan memperkuat sistem kekebalan tubuh. Tidur yang baik mengurangi risiko penyakit kronis seperti diabetes, penyakit jantung, dan obesitas.</p>
+                        </div>
+                    </li>
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span class="emoji">😊</span><span>Meningkatkan Kesejahteraan Emosional</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Tidur yang cukup membantu mengatur suasana hati, mengurangi tingkat stres dan kecemasan. Ini meningkatkan resiliensi emosional dan kemampuan untuk mengatasi tantangan sehari-hari.</p>
+                        </div>
+                    </li>
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span class="emoji">✨</span><span>Meningkatkan Kualitas Hidup</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Individu yang mendapatkan tidur yang berkualitas cenderung memiliki energi lebih, merasa lebih bahagia, dan lebih produktif dalam aktivitas sehari-hari, baik di lingkungan kerja maupun sosial.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        
+        <section class="main-accordion-section">
+            <div class="main-accordion-title" onclick="toggleMainSection(this)">
+                <h2><span class="emoji">🚨</span> Dampak Buruk Kurang Tidur <i class="fas fa-chevron-down toggle-icon-main"></i></h2>
+            </div>
+            <div class="main-accordion-content">
+                <ul class="point-list">
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span class="emoji">📉</span><span>Penurunan Kinerja Kognitif</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Kurang tidur menyebabkan kesulitan berkonsentrasi, penurunan daya ingat, pengambilan keputusan yang buruk, dan reaksi yang lebih lambat. Ini berdampak negatif pada performa akademik dan profesional.</p>
+                        </div>
+                    </li>
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span class="emoji">🤒</span><span>Kerentanan Terhadap Penyakit</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Sistem kekebalan tubuh melemah, membuat seseorang lebih mudah sakit. Risiko penyakit kronis seperti tekanan darah tinggi, penyakit jantung, stroke, dan diabetes juga meningkat.</p>
+                        </div>
+                    </li>
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span class="emoji">😔</span><span>Gangguan Kesehatan Mental</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Kurang tidur sering dikaitkan dengan peningkatan risiko depresi, kecemasan, dan perubahan suasana hati yang drastis. Ini juga dapat memperburuk kondisi kesehatan mental yang sudah ada.</p>
+                        </div>
+                    </li>
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span class="emoji">⚖️</span><span>Masalah Berat Badan</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Kurang tidur mengganggu hormon yang mengatur nafsu makan (ghrelin dan leptin), menyebabkan peningkatan rasa lapar dan keinginan untuk makan makanan tinggi kalori, berujung pada penambahan berat badan atau obesitas.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        
+        <section class="main-accordion-section">
+            <div class="main-accordion-title" onclick="toggleMainSection(this)">
+                <h2><span class="emoji">💡</span> Strategi Mencapai Tidur Berkualitas <i class="fas fa-chevron-down toggle-icon-main"></i></h2>
+            </div>
+            <div class="main-accordion-content">
+                <ul class="point-list">
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span class="emoji">⏰</span><span>Jadwal Tidur Konsisten</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Usahakan tidur dan bangun pada waktu yang sama setiap hari, bahkan di akhir pekan, untuk melatih ritme sirkadian tubuh.</p>
+                        </div>
+                    </li>
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span class="emoji">📵</span><span>Hindari Layar Sebelum Tidur</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Matikan semua perangkat elektronik (ponsel, tablet, laptop, TV) setidaknya 1-2 jam sebelum waktu tidur. Cahaya biru dari layar dapat menekan produksi melatonin.</p>
+                        </div>
+                    </li>
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span class="emoji">🧘‍♀️</span><span>Ritual Relaksasi</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Lakukan aktivitas menenangkan seperti membaca buku fisik, mandi air hangat, mendengarkan musik relaksasi, atau meditasi sebelum tidur.</p>
+                        </div>
+                    </li>
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span class="emoji">☕</span><span>Batasi Kafein dan Alkohol</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Hindari minuman berkafein dan beralkohol pada sore dan malam hari karena dapat mengganggu kualitas tidur.</p>
+                        </div>
+                    </li>
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span class="emoji">🛌</span><span>Ciptakan Lingkungan Tidur Nyaman</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Pastikan kamar tidur gelap, tenang, dan sejuk. Gunakan kasur dan bantal yang nyaman.</p>
+                        </div>
+                    </li>
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span class="emoji">🏃‍♀️</span><span>Olahraga Teratur</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Aktivitas fisik secara teratur dapat meningkatkan kualitas tidur, tetapi hindari olahraga intensif terlalu dekat dengan waktu tidur.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        
+        <section class="main-accordion-section">
+            <div class="main-accordion-title" onclick="toggleMainSection(this)">
+                <h2><span class="emoji">📈</span> Tidur sebagai Investasi Jangka Panjang <i class="fas fa-chevron-down toggle-icon-main"></i></h2>
+            </div>
+            <div class="main-accordion-content">
+                <p>Memprioritaskan tidur malam yang berkualitas bukan sekadar kebutuhan, melainkan investasi penting untuk kesehatan dan kesejahteraan Anda di masa kini dan masa depan. Dengan pola tidur yang baik, Anda akan merasakan manfaat signifikan pada fisik, mental, dan emosional.</p>
+                <p><strong>Jadikan tidur malam sebagai bagian tak terpisahkan dari gaya hidup sehat Anda. Tubuh dan pikiran Anda akan berterima kasih!</strong></p>
+            </div>
+        </section>
+
+        <div class="navigation-buttons">
+            <a href="LINK_ARTIKEL_SEBELUMNYA" class="nav-btn"><< kembali</a>
+            <a href="LINK_DAFTAR_ISI" class="nav-btn">(daftar isi)</a>
+            <a href="LINK_ARTIKEL_SELANJUTNYA" class="nav-btn">lanjut >></a>
+        </div>
+
+    </div>
+    
+    <footer>
+    <a href="https://whatsapp.com/channel/0029VbAtZNp47Xe6JFu65N2u" class="social-btn whatsapp" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Channel">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M20.52 3.48a11.9 11.9 0 00-16.84 0 11.89 11.89 0 00-3.5 8.42c0 2.1.55 4.15 1.6 5.95L2 22l4.25-1.4a11.83 11.83 0 005.95 1.6c4.46 0 8.6-2.8 10.02-7.07a11.9 11.9 0 00-1.7-10.65zm-8.2 14.6a9.52 9.52 0 01-4.8-1.3l-.35-.2-3 1 1-3.1-.23-.36a9.5 9.5 0 0115.7-11.2 9.48 9.48 0 01-7.3 14.3zm5.07-6.4c-.28-.14-1.67-.82-1.93-.91-.26-.1-.45-.14-.64.14s-.73.9-.9 1.08c-.16.18-.32.2-.6.07a7.8 7.8 0 01-2.3-1.42 8.8 8.8 0 01-1.63-2c-.18-.3 0-.46.13-.6.14-.14.3-.34.44-.5a1.76 1.76 0 00.26-.44c.09-.15.05-.27-.02-.4-.07-.13-.64-1.54-.88-2.1-.23-.55-.46-.48-.64-.49a1.2 1.2 0 00-.45-.02c-.15 0-.4.06-.6.3-.2.24-.77.75-.77 1.83s.79 2.12.9 2.28c.1.15 1.55 2.37 3.77 3.32a13.4 13.4 0 001.76.74 1.78 1.78 0 002.03-2.57z"/>
+      </svg>
+    </a>
+
+    <a href="https://www.instagram.com/dr.msmuin?igsh=MTY2NHZmODUydm1ycA==" class="social-btn instagram" target="_blank" rel="noopener noreferrer" aria-label="Instagram Profile">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M7.75 2h8.5A5.75 5.75 0 0122 7.75v8.5A5.75 5.75 0 0116.25 22h-8.5A5.75 5.75 0 012 16.25v-8.5A5.75 5.75 0 017.75 2zm0 1.5a4.25 4.25 0 00-4.25 4.25v8.5a4.25 4.25 0 004.25 4.25h8.5a4.25 4.25 0 004.25-4.25v-8.5a4.25 4.25 0 00-4.25-4.25h-8.5zm8.75 2.25a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5zM12 7a5 5 0 110 10 5 5 0 010-10zm0 1.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z"/>
+      </svg>
+    </a>
+  </footer>
+    <div style="text-align: center;">
+    <p>© 2025 Gen Zehat</p>
+    
+    <p>Ikhtiar Sehat adalah bentuk rasa Syukur</p>
+    <p>🔅🔅🔅</p>
+    </div>
+    <div>
+    <p>.</p>
+    <p>.</p>
+    <p>.</p>
+    </div>
+    <script>
+        // Fungsi untuk mengaktifkan/menonaktifkan (toggle) bagian utama (h2)
+        function toggleMainSection(element) {
+            const content = element.nextElementSibling;
+            const icon = element.querySelector('.toggle-icon-main');
+            
+            // Toggle kelas 'active' pada judul utama
+            element.classList.toggle('active');
+            
+            // Toggle kelas 'show' pada konten utama
+            content.classList.toggle('show');
+        }
+
+        // Fungsi untuk mengaktifkan/menonaktifkan (toggle) sub-item (li.point-item)
+        document.addEventListener('DOMContentLoaded', function() {
+            const pointItems = document.querySelectorAll('.point-item');
+            
+            pointItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Toggle active class on clicked item
+                    this.classList.toggle('active');
+                    
+                    // Toggle show class on detail section
+                    const detail = this.querySelector('.point-detail');
+                    detail.classList.toggle('show');
+                    
+                    // Optional: Close other open sub-items (can be removed if multi-open is desired)
+                    pointItems.forEach(otherItem => {
+                        if (otherItem !== this && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                            otherItem.querySelector('.point-detail').classList.remove('show');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
