@@ -577,7 +577,6 @@
     </style>
 </head>
 <body>
-    <!-- Background bubbles -->
     <div class="bubble"></div>
     <div class="bubble"></div>
     <div class="bubble"></div>
@@ -585,19 +584,16 @@
     <div class="bubble"></div>
 
     <div class="container">
-        <!-- Ornamen dekoratif -->
         <div class="ornament ornament-1"></div>
         <div class="ornament ornament-2"></div>
         <div class="ornament ornament-3"></div>
         
-        <!-- Logo dengan animasi rotasi horizontal -->
         <div class="logo-container" id="logoContainer">
             <div class="logo">
                 <img src="https://muin123-dr.github.io/Website/gen%20zehat.png" alt="Logo Gen Zehat">
             </div>
         </div>
         
-        <!-- Judul Gen Zehat dengan rotasi vertikal dan border berputar -->
         <div class="title-container" id="titleContainer">
             <div class="title-oval" id="titleOval">
                 <h1 class="title">
@@ -606,18 +602,15 @@
             </div>
         </div>
         
-        <!-- Judul 3 Kunci Sehat -->
         <div class="main-title">
             <div class="number-3">3</div>
             <div class="kunci-sehat">KUNCI SEHAT</div>
         </div>
         
-        <!-- Tombol Mulai Baca -->
         <div class="btn-container">
             <a href="https://muin123-dr.github.io/kuncisehat/000.html" class="btn-mulai">Mulai Baca</a>
         </div>
         
-        <!-- Footer -->
         <div class="footer">
             <div class="doctor-name">Dr. Mochamad Syamsul Muin</div>
             <div class="copyright">© Gen Zehat 2025</div>
@@ -660,17 +653,8 @@
                 this.classList.remove('spin-vertical');
             }, 1000);
         });
-
-        // Efek interaktif pada tombol
-        document.querySelector('.btn-mulai').addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            this.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                this.style.transform = '';
-                alert('Halaman akan segera diarahkan ke konten 3 Kunci Sehat');
-            }, 200);
-        });
+        
+        // **CATATAN:** Kode JavaScript untuk tombol "Mulai Baca" yang mencegah pengarahan langsung dan menampilkan alert telah dihapus di sini.
     </script>
 </body>
 </html>
