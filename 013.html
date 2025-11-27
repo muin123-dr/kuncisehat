@@ -94,6 +94,14 @@
             padding: 0 5px;
         }
 
+         /* Aksen untuk Pendahuluan */
+        .intro-accent {
+            border: 0;
+            height: 1px;
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0), var(--medium-green), rgba(0, 0, 0, 0));
+            margin: 10px 0;
+        }
+
         /* 3. Accordion Styles */
         .accordion-item {
             margin-bottom: 15px;
@@ -160,7 +168,7 @@
         /* Panel Content */
         .panel {
             padding: 0 20px;
-            background-color: var(--panel-bg);
+            background-color: #FFFFF0;
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.4s ease-out, padding 0.3s ease;
@@ -321,11 +329,11 @@
             <h2>Efek Samping Makanan Tidak Sehat</h2>
             <p class="sub-header">Efek yang Muncul Jangka Pendek dan Jangka Panjang!</p>
         </div>
-
+        <hr class="intro-accent">
         <p style="font-size: 0.9rem; text-align: center; margin-bottom: 25px; color: #555; font-weight: 500;">
             Berikut Efek samping yang ditimbulkan dari makanan yang tidak sehat:
         </p>
-
+        <hr class="intro-accent">
         <div class="accordion-menu">
 
             <div class="accordion-item">
