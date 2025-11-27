@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pentingnya Aktivitas Fisik untuk Kesehatan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2E8B57;
+            --secondary-color: #3CB371;
+            --accent-color: #20B2AA;
+            --light-color: #F5FFFA;
+            --dark-color: #2F4F4F;
+            --text-color: #333;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 0 0 20px 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid white;
+            box-shadow: var(--shadow);
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin: 25px 0 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        /* Modifikasi untuk struktur ringkas */
+        .summary-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .summary-item {
+            margin-bottom: 20px;
+            background-color: #90EE90;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .summary-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .summary-title {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            border-radius: 15px;
+            transition: var(--transition);
+        }
+
+        .summary-title:hover {
+            background-color: #f0fff0;
+        }
+
+        .summary-title .emoji {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            display: inline-block;
+        }
+
+        .summary-title .toggle-icon {
+            margin-left: auto;
+            transition: var(--transition);
+        }
+
+        .summary-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.7s ease-in-out;
+            padding: 0 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .summary-detail.show {
+            max-height: 2000px; /* Nilai besar agar cukup untuk semua konten */
+            padding: 15px 20px 20px;
+        }
+
+        .summary-item.active .summary-title {
+            color: var(--primary-color);
+            border-radius: 15px 15px 0 0;
+            background-color: #e8f5e9;
+        }
+
+        .summary-item.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Animasi Naik-Turun Sederhana */
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(-5%);
+            }
+            50% {
+                transform: translateY(0);
+            }
+        }
+
+        .animate-bounce {
+            animation: bounce 1.5s infinite ease-in-out;
+        }
+
+        /* Styling konten di dalam detail */
+        .detail-content {
+            padding: 10px 0;
+        }
+
+        .detail-content h3 {
+            color: #FF4500;
+            margin: 15px 0 10px;
+            font-size: 1.1rem;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 5px;
+        }
+
+        .detail-content p, .detail-content ul {
+            margin-bottom: 10px;
+            padding-left: 0;
+        }
+
+        .detail-content ul {
+            list-style-type: none;
+        }
+
+        .detail-content li {
+            margin-bottom: 8px;
+            padding-left: 10px;
+            position: relative;
+        }
+        
+        .highlight {
+            background-color: #fffacd;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding: 15px 0;
+        }
+        
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .nav-btn:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+        
+        /* Kesimpulan dan Footer */
+        .kesimpulan {
+            background-color: #e1f2e6;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--secondary-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 30px;
+            background-color: var(--dark-color);
+            color: white;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            color: var(--dark-color);
+            border-radius: 50%;
+            text-decoration: none;
+            font-size: 24px;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-5px);
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .whatsapp {
+            color: #25D366;
+        }
+        
+        .instagram {
+            color: #E4405F;
+        }
+        
+        /* Tambahan styling untuk Gen Zehat */
+        .footer-logo-text {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 15px;
+        }
+        .gen-red {
+            color: #FF0000;
+        }
+        .zehat-green {
+            color: #3CB371; /* Hijau yang lebih cerah */
+        }
+        .ikhtiar-text {
+            font-style: italic;
+            margin-top: 5px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .summary-title {
+                padding: 15px;
+                font-size: 1.1rem;
+            }
+
+            .summary-title .emoji {
+                font-size: 1.2rem;
+                margin-right: 10px;
+            }
+            
+            .nav-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="https://muin123-dr.github.io/Website/gen%20zehat.png" alt="Logo Gen Zehat">
+        </div>
+        <h1>Pentingnya Aktivitas Fisik</h1>
+    </header>
+    
+    <div class="container">
+        
+        <ul class="summary-list">
+            
+            <li class="summary-item" data-section="intro">
+                <div class="summary-title">
+                    <span class="emoji animate-bounce">🏃</span>
+                    <span>Mengapa Tubuh Butuh Bergerak?</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="summary-detail">
+                    <div class="detail-content">
+                        <p>Tubuh manusia dirancang untuk aktif. Kurang gerak meningkatkan risiko penyakit kronis, sementara aktivitas fisik teratur membawa manfaat holistik:</p>
+                    </div>
+                </div>
+            </li>
+
+            <li class="summary-item" data-section="fisik">
+                <div class="summary-title">
+                    <span class="emoji animate-bounce">💪</span>
+                    <span>Manfaat Fisik</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="summary-detail">
+                    <div class="detail-content">
+                        
+                        <h3><span role="img" aria-label="Jantung">❤️</span> Kesehatan Jantung dan Pembuluh Darah</h3>
+                        <p>Memperkuat otot jantung, menurunkan tekanan darah, dan meningkatkan sirkulasi darah.</p>
+                        <ul>
+                            <li>Menurunkan risiko penyakit jantung koroner hingga <span class="highlight">30–40%</span> (American Heart Association).</li>
+                            <li>Meningkatkan kolesterol baik (HDL) dan mengurangi kolesterol jahat (LDL).</li>
+                        </ul>
+
+                        <h3><span role="img" aria-label="Metabolisme">🔥</span> Metabolisme Optimal</h3>
+                        <p>Meningkatkan sensitivitas insulin, mencegah diabetes tipe 2.</p>
+                        <p>Membakar kalori dan mengontrol berat badan.</p>
+                        <p>Studi membuktikan jalan cepat 30 menit setelah makan menurunkan gula darah hingga <span class="highlight">22%</span> (<em>Journal of Clinical Endocrinology & Metabolism</em>, 2021).</p>
+                        
+                        <h3><span role="img" aria-label="Tulang dan Otot">🦴</span> Kekuatan Tulang dan Otot</h3>
+                        <p>Mencegah osteoporosis melalui aktivitas menahan beban (jalan, lari, latihan beban).</p>
+                        <p>Memperkuat massa otot, mencegah sarkopenia (penurunan otot akibat usia).</p>
+
+                        <h3><span role="img" aria-label="Imunitas">🛡️</span> Imunitas dan Pemulihan</h3>
+                        <p>Meningkatkan sirkulasi sel darah putih untuk melawan infeksi.</p>
+                        <p>Mempercepat pemulihan otot pasca-olahraga.</p>
+
+                    </div>
+                </div>
+            </li>
+            
+            <li class="summary-item" data-section="mental">
+                <div class="summary-title">
+                    <span class="emoji animate-bounce">🧠</span>
+                    <span>Manfaat Mental dan Emosional</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="summary-detail">
+                    <div class="detail-content">
+                        
+                        <h3><span role="img" aria-label="Stres dan Kecemasan">🧘</span> Reduksi Stres dan Kecemasan</h3>
+                        <p>Pelepasan endorfin dan serotonin mengurangi hormon stres (kortisol).</p>
+                        <p>Orang aktif mengalami <span class="highlight">43% lebih sedikit</span> hari buruk secara mental (<em>The Lancet Psychiatry</em>, 2018).</p>
+
+                        <h3><span role="img" aria-label="Peningkatan Kognitif">💡</span> Peningkatan Kognitif</h3>
+                        <p>Merangsang pertumbuhan sel otak baru di hippocampus (area memori).</p>
+                        <p>Lansia aktif berisiko demensia <span class="highlight">40% lebih rendah</span> (<em>Journal of Alzheimer's Disease</em>).</p>
+
+                        <h3><span role="img" aria-label="Kualitas Tidur">😴</span> Kualitas Tidur Lebih Baik</h3>
+                        <p>Mengatur siklus tidur alami, mengurangi insomnia.</p>
+
+                    </div>
+                </div>
+            </li>
+
+        </ul>
+
+        <section class="kesimpulan">
+            <h2>Kesimpulan</h2>
+            <p>Aktivitas fisik teratur bukan hanya tentang kebugaran, tetapi merupakan investasi penting untuk pencegahan penyakit jangka panjang. Dengan meluangkan waktu untuk bergerak, Anda secara aktif menjaga kekuatan fisik, mengoptimalkan fungsi metabolik, serta meningkatkan kesehatan mental dan kualitas hidup secara keseluruhan. Mulailah dari langkah kecil untuk mendapatkan manfaat besar.</p>
+        </section>
+        
+        <div class="navigation">
+            <a href="https://muin123-dr.github.io/kuncisehat/030.html" class="nav-btn"><i class="fas fa-arrow-left"></i> &nbsp; Kembali</a>
+            <a href="https://muin123-dr.github.io/kuncisehat/000.html" class="nav-btn">Daftar Isi</a>
+            <a href="https://muin123-dr.github.io/kuncisehat/032.html" class="nav-btn">Lanjut &nbsp; <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+    
+    <footer>
+        
+        <div class="social-links">
+            <a href="https://whatsapp.com/channel/0029VbAtZNp47Xe6JFu65N2u" class="social-btn whatsapp" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="https://www.instagram.com/dr.msmuin?igsh=MTY2NHZmODUydm1ycA==" class="social-btn instagram" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+        <div class="footer-logo-text">
+            <span class="gen-red">@Gen Z</span><span class="zehat-green">ehat</span> 2025
+        </div>
+        <div class="ikhtiar-text">
+            Ikhtiar Sehat merupakan bentuk Rasa Syukur
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const summaryItems = document.querySelectorAll('.summary-item');
+            
+            summaryItems.forEach(item => {
+                const title = item.querySelector('.summary-title');
+                const detail = item.querySelector('.summary-detail');
+
+                title.addEventListener('click', function() {
+                    // Toggle active class on clicked item
+                    item.classList.toggle('active');
+                    
+                    // Toggle show class on detail section
+                    detail.classList.toggle('show');
+                    
+                    // Close other open items
+                    summaryItems.forEach(otherItem => {
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                            otherItem.querySelector('.summary-detail').classList.remove('show');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
