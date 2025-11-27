@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puasa: Investasi Kesehatan - Gen Zehat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* 1. General Styles & Smooth Colors */
+        :root {
+            --primary-green: #4CAF50;
+            --dark-green: #1B5E20; 
+            --medium-green: #2E7D32; 
+            --header-bg-start: #E8F5E9; 
+            --header-bg-end: #C8E6C9;   
+            
+            --accordion-initial-bg: #F2F4F3; 
+            --accordion-active-bg: #D4EDDA;  
+            --panel-bg: #FFFFFF;             
+            
+            --dark-text: #37474F;
+            --light-text: #546E7A;
+            --bg-color: #F9FBFD;
+            --card-bg: #ffffff;
+            --accent-red: #e53935;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--dark-text);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            background-color: var(--card-bg);
+            box-shadow: 0 4px 25px rgba(0,0,0,0.05);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            border-radius: 25px;
+        }
+
+        /* 2. Header Area */
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, var(--header-bg-start) 0%, var(--header-bg-end) 100%);
+            padding: 30px 15px;
+            border-radius: 20px;
+            box-shadow: inset 0 0 15px rgba(255,255,255,0.5), 0 4px 10px rgba(0,0,0,0.03);
+        }
+
+        .logo-img {
+            width: 110px;
+            height: auto;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+            transition: transform 0.3s;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            color: var(--dark-green);
+            font-weight: 800;
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+
+        .sub-header {
+            font-size: 0.85rem;
+            color: var(--medium-green);
+            font-weight: 600;
+            padding: 0 5px;
+        }
+
+        /* 3. Accordion Styles */
+        .accordion-item {
+            margin-bottom: 15px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-header {
+            background-color: var(--accordion-initial-bg);
+            color: var(--dark-text);
+            cursor: pointer;
+            padding: 15px 18px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background-color 0.3s;
+        }
+
+        .accordion-header:hover {
+            background-color: #e0e4e2;
+        }
+
+        /* Animasi Naik Turun Emoji */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        .emoji-icon {
+            font-size: 1.3rem;
+            margin-right: 10px;
+            display: inline-block;
+            animation: bounce 2.5s infinite ease-in-out;
+        }
+
+        .accordion-header.active {
+            background-color: var(--accordion-active-bg);
+            color: #1B5E20;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .arrow {
+            font-size: 0.9rem;
+            color: #888;
+            transition: transform 0.3s ease;
+        }
+
+        .active .arrow {
+            transform: rotate(180deg);
+            color: #1B5E20;
+        }
+
+        /* Panel Content */
+        .panel {
+            padding: 0 20px;
+            background-color: var(--panel-bg);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.3s ease;
+            font-size: 0.9rem;
+            color: var(--light-text);
+            border-bottom: 4px solid var(--accordion-active-bg);
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+
+        .panel-content {
+            padding: 20px 0;
+        }
+
+        /* Styling Konten dalam Panel */
+        .info-block {
+            margin-bottom: 15px;
+            border-bottom: 1px dashed #eee;
+            padding-bottom: 10px;
+        }
+        
+        .info-block:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .label-header {
+            font-weight: 700;
+            color: var(--dark-green);
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .info-text {
+            margin-left: 0;
+            display: block;
+            line-height: 1.5;
+            text-align: justify;
+        }
+
+        ul.custom-list {
+            padding-left: 20px;
+            margin-top: 5px;
+        }
+        
+        ul.custom-list li {
+            margin-bottom: 8px;
+        }
+
+        /* Styling Peringatan */
+        .warning-box {
+            background-color: #FFEBEE;
+            border-left: 4px solid #EF5350;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .warning-title {
+            color: #C62828;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Styling Kesimpulan */
+        .conclusion-box {
+            background-color: #E8F5E9;
+            border-left: 5px solid var(--primary-green);
+            padding: 15px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--dark-text);
+        }
+
+        .conclusion-title {
+            font-weight: 700;
+            color: var(--dark-green);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        /* 4. Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0 30px 0;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 12px 5px;
+            background-color: transparent;
+            border: 2px solid var(--primary-green);
+            color: var(--primary-green);
+            text-align: center;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--primary-green);
+            color: white;
+            box-shadow: 0 4px 10px rgba(76, 175, 80, 0.2);
+        }
+
+        /* 5. Social Buttons */
+        .social-buttons {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            text-decoration: none;
+            color: white;
+            font-size: 1.8rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px) scale(1.05);
+             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        
+        .social-link:active {
+            transform: scale(0.95);
+        }
+
+        .wa-btn {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+        }
+
+        .ig-btn {
+            background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+
+        /* Footer Text */
+        .footer {
+            text-align: center;
+            margin-top: auto;
+            padding-bottom: 10px;
+            font-size: 0.85rem;
+        }
+
+        .brand-text {
+            font-weight: 800;
+            margin-bottom: 8px;
+            display: block;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+        
+        .tagline {
+            font-style: italic;
+            color: #888;
+            font-size: 0.8rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <a href="https://muin123-dr.github.io/Website/gen%20zehat.png" target="_blank">
+                <img src="https://muin123-dr.github.io/Website/gen%20zehat.png" alt="Logo Gen Zehat" class="logo-img">
+            </a>
+            <h2>PUASA</h2>
+            <p class="sub-header">Investasi Kesehatan Holistik dari Detoksifikasi hingga Regenerasi Seluler</p>
+        </div>
+
+        <p style="font-size: 0.9rem; text-align: justify; margin-bottom: 25px; color: #555; line-height: 1.7; padding: 0 5px;">
+            Puasa kini semakin diakui oleh ilmu pengetahuan modern sebagai instrumen kesehatan yang bersifat multiaset. Melampaui dimensi spiritual, puasa memicu mekanisme fisiologis kompleks untuk detoksifikasi, regenerasi sel, dan pencegahan penyakit.
+        </p>
+
+        <div class="accordion-menu">
+
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span><span class="emoji-icon">🍃</span>Detoksifikasi Organ Vital</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </button>
+                <div class="panel">
+                    <div class="panel-content">
+                        <ul class="custom-list">
+                            <li>Tubuh bertransisi dari modus "pencernaan" ke "pemulihan".</li>
+                            <li>Hati dan ginjal membersihkan akumulasi toksin dari polusi dan makanan olahan.</li>
+                            <li>Merangsang produksi <em>glutathione</em> (antioksidan krusial penangkal radikal bebas).</li>
+                            <li>Meningkatkan efisiensi eliminasi limbah metabolik, termasuk lemak.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span><span class="emoji-icon">♻️</span>Autofagi (Daur Ulang Sel)</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </button>
+                <div class="panel">
+                    <div class="panel-content">
+                        <span class="info-text">Autofagi adalah mekanisme "daur ulang sel" untuk mencegah penyakit. Saat puasa:</span>
+                        <ul class="custom-list">
+                            <li>Penurunan insulin dan peningkatan glukagon memberi sinyal sel untuk mendegradasi komponen rusak.</li>
+                            <li>Mencegah penumpukan "sampah seluler" pemicu kanker, Alzheimer, dan penuaan dini.</li>
+                            <li>Studi menunjukkan puasa 24-48 jam dapat meningkatkan autofagi hingga 300%.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span><span class="emoji-icon">📉</span>Manfaat Metabolik</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </button>
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="info-block">
+                            <span class="label-header">🩸 Kontrol Glukosa Darah:</span>
+                            <span class="info-text">Meningkatkan sensitivitas insulin dan menurunkan resistensi insulin, mengurangi risiko diabetes tipe 2.</span>
+                        </div>
+                        <div class="info-block">
+                            <span class="label-header">⚖️ Manajemen Berat Badan:</span>
+                            <span class="info-text">Mendorong pembakaran lemak dan mengurangi lemak visceral (penyebab utama obesitas).</span>
+                        </div>
+                        <div class="info-block">
+                            <span class="label-header">❤️ Peningkatan Profil Lipid:</span>
+                            <span class="info-text">Menurunkan trigliserida dan kolesterol jahat (LDL), serta meningkatkan kolesterol baik (HDL).</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span><span class="emoji-icon">🩺</span>Jantung & Anti-Inflamasi</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </button>
+                <div class="panel">
+                    <div class="panel-content">
+                        <ul class="custom-list">
+                            <li>Menurunkan tekanan darah dan mengurangi peradangan sistemik.</li>
+                            <li>Studi <em>Journal of Nutrition</em>: Puasa intermiten 8 minggu menurunkan tekanan darah sistolik sebesar 6%.</li>
+                            <li>Mencegah artritis dan penyakit autoimun dengan menekan sitokin pro-inflamasi.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span><span class="emoji-icon">🧠</span>Fungsi Otak & Neuroproteksi</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </button>
+                <div class="panel">
+                    <div class="panel-content">
+                        <ul class="custom-list">
+                            <li>Merangsang protein BDNF yang mendukung pertumbuhan neuron dan memori.</li>
+                            <li>Melindungi dari Alzheimer dan depresi.</li>
+                            <li>Memicu <em>ketogenesis</em> yang memberikan energi alternatif pelindung otak dari stres oksidatif.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span><span class="emoji-icon">🛡️</span>Mikroba Usus & Imunitas</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </button>
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="info-block">
+                            <span class="label-header">🦠 Kesehatan Usus:</span>
+                            <span class="info-text">Meningkatkan bakteri baik (Lactobacillus & Akkermansia) yang mendukung kesehatan metabolik.</span>
+                        </div>
+                        <div class="info-block">
+                            <span class="label-header">💉 Sistem Imun:</span>
+                            <span class="info-text">Meregenerasi sistem imun dengan memproduksi sel-sel baru, meningkatkan ketahanan terhadap infeksi.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span><span class="emoji-icon">🕰️</span>Jenis & Rekomendasi</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </button>
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="info-block">
+                            <span class="label-header">Puasa Sunah:</span>
+                            <span class="info-text">Harian dari fajar hingga senja (perhatikan hidrasi saat berbuka).</span>
+                        </div>
+                        <div class="info-block">
+                            <span class="label-header">Puasa Intermittent (16/8):</span>
+                            <span class="info-text">Puasa 16 jam, makan 8 jam. Cocok untuk pemula.</span>
+                        </div>
+                        <div class="info-block">
+                            <span class="label-header">Metode 5:2:</span>
+                            <span class="info-text">Makan normal 5 hari, batasi 500-600 kalori pada 2 hari lainnya.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    <span><span class="emoji-icon">⚠️</span>Peringatan & Pertimbangan</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </button>
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="warning-box">
+                            <span class="warning-title">Tidak Direkomendasikan Untuk:</span>
+                            <ul class="custom-list" style="margin-bottom: 0;">
+                                <li>Ibu hamil, menyusui, dan anak-anak.</li>
+                                <li>Penderita diabetes tipe 1, gagal ginjal, atau gangguan makan.</li>
+                                <li>Individu dengan riwayat hipoglikemia.</li>
+                            </ul>
+                        </div>
+                        <p style="margin-top: 10px; font-size: 0.85rem; font-style: italic;">*Konsultasi dokter sangat dianjurkan bagi pemilik kondisi medis kronis.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="conclusion-box">
+            <span class="conclusion-title">📝 KESIMPULAN:</span>
+            <p style="text-align: justify;">Puasa bukan sekadar menahan lapar, melainkan strategi holistik yang menyelaraskan fungsi tubuh, otak, dan seluler. Ini adalah investasi kesehatan berharga di era modern.</p>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="https://muin123-dr.github.io/kuncisehat/014.html" class="nav-btn">&lt;&lt;kembali</a>
+            <a href="https://muin123-dr.github.io/kuncisehat/000.html" class="nav-btn">(daftar isi)</a>
+            <a href="https://muin123-dr.github.io/kuncisehat/020.html" class="nav-btn">lanjut&gt;&gt;</a>
+        </div>
+
+        <div class="social-buttons">
+            <a href="https://whatsapp.com/channel/0029VbAtZNp47Xe6JFu65N2u" target="_blank" class="social-link wa-btn" aria-label="WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="https://www.instagram.com/dr.msmuin?igsh=MTY2NHZmODUydm1ycA==" target="_blank" class="social-link ig-btn" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+
+        <div class="footer">
+            <span class="brand-text">
+                @<span style="color: var(--accent-red);">Gen Z</span><span style="color: var(--primary-green);">ehat</span> 2025
+            </span>
+            <p class="tagline">Ikhtiar Sehat merupakan bentuk Rasa Syukur</p>
+        </div>
+    </div>
+
+    <script>
+        var acc = document.getElementsByClassName("accordion-header");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                // Menutup panel lain
+                var allPanels = document.getElementsByClassName("panel");
+                var allHeaders = document.getElementsByClassName("accordion-header");
+                
+                for (var j = 0; j < allPanels.length; j++) {
+                    if (allHeaders[j] !== this) {
+                        allPanels[j].style.maxHeight = null;
+                        allHeaders[j].classList.remove("active");
+                    }
+                }
+
+                // Toggle active class
+                this.classList.toggle("active");
+                
+                // Toggle panel visibility
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                }
+            });
+        }
+    </script>
+</body>
+</html>
