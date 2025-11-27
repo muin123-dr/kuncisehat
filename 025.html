@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bahaya Kebiasaan Begadang</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #6b8cbc;
+            --accent-color: #ff9a76;
+            --light-color: #f5f7fa;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --item-bg-color: #e8ecf1;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 80vh;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 0 0 20px 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid white;
+            box-shadow: var(--shadow);
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        /* --- STYLE BARU: GRID MENU & ANIMASI --- */
+        .main-menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .menu-card {
+            background: white;
+            padding: 20px 10px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-card:hover, .menu-card.active-tab {
+            border-color: var(--primary-color);
+            background: #eef2f7;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(74, 111, 165, 0.2);
+        }
+
+        .menu-card.active-tab::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0; 
+            height: 0; 
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid var(--primary-color);
+        }
+
+        .menu-title {
+            display: block;
+            margin-top: 15px;
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        /* Animasi Bounce (Naik Turun) */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating-emoji {
+            display: inline-block;
+            font-size: 2.5em;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        /* Container untuk konten yang bisa di-hide/show */
+        .content-container {
+            display: none; /* Default hidden */
+            animation: slideDown 0.5s ease forwards;
+            margin-bottom: 30px;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* --- END STYLE BARU --- */
+        
+        /* --- Styles untuk Judul Section (H2) --- */
+        .section-header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 15px 15px 0 0;
+            margin-bottom: 0;
+        }
+
+        .section-header h2 {
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        .section-body {
+            background: white;
+            border-radius: 0 0 15px 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        /* --- Styles untuk Item Akordeon Bersarang (Tetap Sama) --- */
+        .point-list {
+            list-style-type: none;
+            padding-top: 0;
+        }
+        
+        .point-item {
+            margin-bottom: 12px;
+            padding: 15px;
+            background-color: var(--item-bg-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .point-item:hover {
+            background-color: #dbe2e9;
+            transform: translateX(5px);
+        }
+        
+        .point-item.active {
+            background-color: #d2dae3;
+            border-left-color: var(--accent-color);
+        }
+        
+        .point-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+        
+        .point-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            padding-top: 0;
+        }
+        
+        .point-detail.show {
+            max-height: 1000px;
+            padding-top: 15px;
+        }
+        
+        .point-detail p, .point-detail ul {
+            margin-bottom: 10px;
+            color: #555;
+        }
+        
+        .point-detail ul {
+            padding-left: 20px;
+        }
+        
+        .point-detail li {
+            margin-bottom: 5px;
+        }
+        
+        .toggle-icon {
+            transition: var(--transition);
+        }
+        
+        .point-item.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        /* --- Styles untuk Tombol Navigasi --- */
+         .navigation-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .nav-btn-prev, .nav-btn-next {
+            background-color: #f0fdfa;
+            color: #38b2ac;
+            border: 1px solid #38b2ac;
+        }
+
+        .nav-btn-prev:hover, .nav-btn-next:hover {
+            background-color: #38b2ac;
+            color: white;
+            box-shadow: 0 4px 10px rgba(56, 178, 172, 0.3);
+        }
+
+        .nav-btn-toc {
+            background-color: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .nav-btn-toc:hover {
+            background-color: #cbd5e0;
+            color: #2d3748;
+        }
+
+
+        /* Conclusion Style */
+        .conclusion-box {
+            background: linear-gradient(135deg, #e0eafc, #cfdef3);
+            border-left: 5px solid var(--primary-color);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+        .conclusion-box h2 {
+            color: var(--dark-color);
+            margin-bottom: 15px;
+        }
+
+        /* --- Footer --- */
+        footer {
+            position: fixed;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 100;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .social-btn:focus,
+        .social-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+            outline: none;
+        }
+
+        .whatsapp { background-color: #25D366; }
+        .instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+
+        svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 2rem; }
+            .subtitle { font-size: 0.9rem; margin-bottom: 1.5rem; }
+            footer { bottom: 0.8rem; gap: 0.8rem; }
+            .social-btn { width: 42px; height: 42px; }
+            svg { width: 20px; height: 20px; }
+            .main-menu-grid { grid-template-columns: 1fr 1fr; }
+            .floating-emoji { font-size: 2em; }
+            .menu-title { font-size: 0.9em; }
+        }
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="https://muin123-dr.github.io/Website/gen%20zehat.png" alt="Logo Gen Zehat">
+        </div>
+        <h1>Bahaya Kebiasaan Begadang</h1>
+        <p>Implikasi Kesehatan dan Upaya Pencegahan</p>
+    </header>
+    
+    <div class="container">
+        
+        <div class="main-menu-grid">
+            <div class="menu-card" onclick="showSection('faktor', this)">
+                <span class="floating-emoji" style="animation-delay: 0s;">💡</span>
+                <span class="menu-title">Faktor Penyebab</span>
+            </div>
+            <div class="menu-card" onclick="showSection('dampak', this)">
+                <span class="floating-emoji" style="animation-delay: 0.5s;">🩸</span>
+                <span class="menu-title">Dampak Negatif</span>
+            </div>
+            <div class="menu-card" onclick="showSection('strategi', this)">
+                <span class="floating-emoji" style="animation-delay: 1s;">🛠️</span>
+                <span class="menu-title">Strategi Mengatasi</span>
+            </div>
+            <div class="menu-card" onclick="showSection('tindakan', this)">
+                <span class="floating-emoji" style="animation-delay: 1.5s;">📞</span>
+                <span class="menu-title">Tindakan</span>
+            </div>
+        </div>
+
+        <div id="faktor" class="content-container">
+            <div class="section-header">
+                <h2>💡 Faktor-faktor Penyebab Kebiasaan Begadang</h2>
+            </div>
+            <div class="section-body">
+                <ul class="point-list">
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span>Ketakutan Ketinggalan Tren (FOMO)</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Kekhawatiran untuk tidak mengetahui perkembangan terkini di media sosial, tren viral di platform seperti TikTok, atau percakapan dalam kelompok daring mendorong individu untuk terus terjaga.</p>
+                        </div>
+                    </li>
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span>Akses Hiburan Tanpa Batas</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Ketersediaan hiburan digital yang tak terbatas, seperti permainan daring, layanan streaming video (Netflix, YouTube), dan media sosial (Instagram), sering kali membuat sulit untuk menghentikan aktivitas dan beristirahat.</p>
+                        </div>
+                    </li>
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span>Tuntutan Akademis dan Profesional</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Tekanan untuk menyelesaikan tugas akademik, pekerjaan paruh waktu, atau persiapan ujian yang menumpuk dapat memaksa individu untuk mengurangi waktu tidur.</p>
+                        </div>
+                    </li>
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span>Pola Hidup yang Tidak Teratur</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Kebiasaan menghabiskan waktu di luar rumah pada malam hari atau praktik "balas dendam waktu tidur" (revenge bedtime procrastination)—menunda tidur untuk menikmati waktu luang setelah seharian beraktivitas—sering kali mengganggu jadwal tidur yang sehat.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div id="dampak" class="content-container">
+            <div class="section-header">
+                <h2>🩸 Dampak Negatif terhadap Kesehatan</h2>
+            </div>
+            <div class="section-body">
+                <ul class="point-list">
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span>Kerentanan Fisik terhadap Penyakit</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <ul>
+                                <li><strong>Penurunan Sistem Kekebalan Tubuh:</strong> Kurangnya tidur melemahkan fungsi sel darah putih, meningkatkan risiko terkena infeksi seperti flu dan pilek.</li>
+                                <li><strong>Gangguan Metabolisme:</strong> Ketidakseimbangan hormon ghrelin dan leptin akibat kurang tidur meningkatkan risiko obesitas dan diabetes tipe 2.</li>
+                                <li><strong>Masalah Kardiovaskular:</strong> Tidur kurang dari tujuh jam per malam secara signifikan meningkatkan risiko penyakit jantung, terutama pada wanita dengan Sindrom Ovarium Polikistik (PCOS).</li>
+                                <li><strong>Percepatan Proses Penuaan:</strong> Kurang tidur menghambat proses detoksifikasi alami tubuh, menyebabkan kulit kusam, timbul lingkaran hitam di bawah mata, dan mempercepat munculnya kerutan.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span>Gangguan Kesehatan Mental</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <ul>
+                                <li><strong>Kecemasan dan Depresi:</strong> Kurang tidur mengganggu regulasi hormon serotonin dan kortisol, meningkatkan risiko gangguan kecemasan dan depresi. Studi menunjukkan prevalensi gejala cemas yang tinggi di kalangan Generasi Z akibat kebiasaan begadang.</li>
+                                <li><strong>Labilitas Emosi:</strong> Individu yang kurang tidur cenderung lebih mudah marah, sensitif, dan menarik diri dari interaksi sosial.</li>
+                                <li><strong>Peningkatan Pikiran Negatif:</strong> Remaja yang sering begadang memiliki risiko lebih tinggi untuk mengalami pikiran untuk bunuh diri atau terlibat dalam penyalahgunaan zat terlarang.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span>Penurunan Fungsi Kognitif</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <ul>
+                                <li><strong>Gangguan Konsentrasi:</strong> Kurang tidur menyebabkan kesulitan dalam memusatkan perhatian saat belajar atau bekerja.</li>
+                                <li><strong>Gangguan Memori:</strong> Proses penyimpanan informasi di otak terganggu akibat kurang tidur, menyebabkan kesulitan mengingat materi pelajaran atau informasi penting lainnya.</li>
+                                <li><strong>Penurunan Kreativitas:</strong> Kelelahan otak akibat kurang tidur menghambat kemampuan untuk menghasilkan ide-ide baru dan inovatif.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span>Implikasi Sosial dan Perilaku Berisiko</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <ul>
+                                <li><strong>Ketergantungan pada Stimulan:</strong> Upaya untuk mengatasi rasa kantuk sering kali berujung pada konsumsi berlebihan kafein atau minuman berenergi, yang dapat menyebabkan gangguan pencernaan dan masalah jantung.</li>
+                                <li><strong>Peningkatan Perilaku Berbahaya:</strong> Generasi Z yang begadang memiliki kecenderungan lebih tinggi untuk terlibat dalam perilaku berisiko seperti mengemudi dengan kecepatan tinggi, konsumsi alkohol, atau penyalahgunaan narkoba.</li>
+                                <li><strong>Kerusakan Hubungan Interpersonal:</strong> Ketidakstabilan emosi akibat kurang tidur dapat menyebabkan ketegangan dalam pertemanan dan hubungan keluarga.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span>Konsekuensi Jangka Panjang</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <ul>
+                                <li><strong>Peningkatan Risiko Penyakit Kronis:</strong> Kebiasaan begadang dalam jangka panjang dapat meningkatkan risiko penyakit kronis seperti diabetes, Alzheimer, hipertensi, dan bahkan kanker.</li>
+                                <li><strong>Penurunan Produktivitas:</strong> Performa akademik atau pekerjaan yang menurun akibat kurang tidur dapat menghambat peluang karier di masa depan.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div id="strategi" class="content-container">
+            <div class="section-header">
+                <h2>🛠️ Strategi Mengatasi Kebiasaan Begadang</h2>
+            </div>
+            <div class="section-body">
+                <ul class="point-list">
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span>Penetapan Jadwal Tidur yang Konsisten</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Berupaya untuk tidur dan bangun pada waktu yang sama setiap hari, termasuk akhir pekan, untuk mengatur ritme sirkadian tubuh. Idealnya, targetkan waktu tidur 7 hingga 9 jam setiap malam.</p>
+                        </div>
+                    </li>
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span>Detoksifikasi Digital Sebelum Tidur</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Menghindari penggunaan perangkat elektronik setidaknya satu jam sebelum tidur, mematikan notifikasi, dan mengaktifkan mode malam (night shift) untuk mengurangi paparan cahaya biru.</p>
+                        </div>
+                    </li>
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span>Pengembangan Ritual Relaksasi Sebelum Tidur</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Melakukan aktivitas yang menenangkan seperti meditasi menggunakan aplikasi mindfulness, membaca buku fisik, mendengarkan podcast relaksasi, atau mandi air hangat dengan minyak esensial lavender.</p>
+                        </div>
+                    </li>
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span>Pembatasan Konsumsi Stimulan dan Makanan Berat</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Mengganti minuman berkafein dan makanan berat dengan teh chamomile atau susu hangat pada malam hari.</p>
+                        </div>
+                    </li>
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span>Menciptakan Lingkungan Tidur yang Optimal</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Memastikan kamar tidur benar-benar gelap (menggunakan penutup mata atau gorden tebal), memiliki suhu yang sejuk (18–22°C), dan bebas dari gangguan perangkat elektronik.</p>
+                        </div>
+                    </li>
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span>Manajemen Prioritas</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Mengelola waktu dengan efektif, menyelesaikan tugas lebih awal, dan membatasi waktu yang dihabiskan untuk media sosial (menggunakan fitur batas waktu penggunaan aplikasi).</p>
+                        </div>
+                    </li>
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span>Pembentukan Komunitas yang Mendukung</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Mengajak teman-teman untuk bersama-sama menerapkan tantangan tidur yang cukup.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div id="tindakan" class="content-container">
+            <div class="section-header">
+                <h2>📞 Tindakan yang Perlu Dilakukan</h2>
+            </div>
+            <div class="section-body">
+                <ul class="point-list">
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span>Konsultasi dengan Profesional Kesehatan</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Mencari bantuan dari dokter atau terapis untuk mendapatkan diagnosis dan penanganan yang tepat, seperti terapi perilaku kognitif untuk insomnia (CBT-I).</p>
+                        </div>
+                    </li>
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span>Peningkatan Pengetahuan</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Mengikuti seminar daring atau membaca artikel kesehatan tidur dari sumber yang kredibel untuk meningkatkan pemahaman mengenai pentingnya tidur.</p>
+                        </div>
+                    </li>
+                    <li class="point-item">
+                        <div class="point-title">
+                            <span>Berbagi Masalah</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="point-detail">
+                            <p>Tidak ragu untuk membicarakan masalah tidur dengan orang tua, guru, atau psikolog untuk mendapatkan dukungan.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <section class="conclusion-box">
+            <h2>🌟 Kesimpulan</h2>
+            <p>Kebiasaan begadang di kalangan Generasi muda membawa risiko kesehatan yang signifikan dan beragam, mulai dari gangguan fisik dan mental hingga penurunan fungsi kognitif dan masalah sosial. Kesadaran akan bahaya ini merupakan langkah awal yang penting.</p>
+            <p style="margin-top: 10px;">Melalui adopsi gaya hidup sehat, penetapan prioritas yang bijak, dan pemanfaatan strategi anti-begadang yang efektif, Generasi muda dapat melindungi kesehatan mereka dan mengoptimalkan potensi diri di masa depan.</p>
+        </section>
+
+        <div class="navigation-container">
+            <a href="https://muin123-dr.github.io/kuncisehat/024.html" class="nav-btn nav-btn-prev">&lt;&lt; kembali</a>
+            <a href="https://muin123-dr.github.io/kuncisehat/000.html" class="nav-btn nav-btn-toc">(daftar isi)</a>
+            <a href="https://muin123-dr.github.io/kuncisehat/030.html" class="nav-btn nav-btn-next">lanjut &gt;&gt;</a>
+        </div>
+
+        <footer>
+    <a href="https://whatsapp.com/channel/0029VbAtZNp47Xe6JFu65N2u" class="social-btn whatsapp" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Channel">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M20.52 3.48a11.9 11.9 0 00-16.84 0 11.89 11.89 0 00-3.5 8.42c0 2.1.55 4.15 1.6 5.95L2 22l4.25-1.4a11.83 11.83 0 005.95 1.6c4.46 0 8.6-2.8 10.02-7.07a11.9 11.9 0 00-1.7-10.65zm-8.2 14.6a9.52 9.52 0 01-4.8-1.3l-.35-.2-3 1 1-3.1-.23-.36a9.5 9.5 0 0115.7-11.2 9.48 9.48 0 01-7.3 14.3zm5.07-6.4c-.28-.14-1.67-.82-1.93-.91-.26-.1-.45-.14-.64.14s-.73.9-.9 1.08c-.16.18-.32.2-.6.07a7.8 7.8 0 01-2.3-1.42 8.8 8.8 0 01-1.63-2c-.18-.3 0-.46.13-.6.14-.14.3-.34.44-.5a1.76 1.76 0 00.26-.44c.09-.15.05-.27-.02-.4-.07-.13-.64-1.54-.88-2.1-.23-.55-.46-.48-.64-.49a1.2 1.2 0 00-.45-.02c-.15 0-.4.06-.6.3-.2.24-.77.75-.77 1.83s.79 2.12.9 2.28c.1.15 1.55 2.37 3.77 3.32a13.4 13.4 0 001.76.74 1.78 1.78 0 002.03-2.57z"/>
+      </svg>
+    </a>
+
+    <a href="https://www.instagram.com/dr.msmuin?igsh=MTY2NHZmODUydm1ycA==" class="social-btn instagram" target="_blank" rel="noopener noreferrer" aria-label="Instagram Profile">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M7.75 2h8.5A5.75 5.75 0 0122 7.75v8.5A5.75 5.75 0 0116.25 22h-8.5A5.75 5.75 0 012 16.25v-8.5A5.75 5.75 0 017.75 2zm0 1.5a4.25 4.25 0 00-4.25 4.25v8.5a4.25 4.25 0 004.25 4.25h8.5a4.25 4.25 0 004.25-4.25v-8.5a4.25 4.25 0 00-4.25-4.25h-8.5zm8.75 2.25a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5zM12 7a5 5 0 110 10 5 5 0 010-10zm0 1.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z"/>
+      </svg>
+    </a>
+  </footer>
+    <div style="text-align: center;">
+    <p>© 2025 Gen Zehat</p>
+    
+    <p>Ikhtiar Sehat adalah bentuk rasa Syukur</p>
+    <p>🔅🔅🔅</p>
+    </div>
+    <div>
+    <p>.</p>
+    <p>.</p>
+    </div>
+
+
+    <script>
+        // FUNGSI TOGGLE MENU / TAB
+        function showSection(sectionId, element) {
+            // Sembunyikan semua konten
+            document.querySelectorAll('.content-container').forEach(el => {
+                el.style.display = 'none';
+            });
+
+            // Hapus kelas aktif dari semua tombol menu
+            document.querySelectorAll('.menu-card').forEach(card => {
+                card.classList.remove('active-tab');
+            });
+
+            // Tampilkan section yang dituju
+            const target = document.getElementById(sectionId);
+            if (target) {
+                target.style.display = 'block';
+                // Scroll sedikit agar nyaman dilihat
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            // Tambahkan highlight ke tombol yang diklik
+            if (element) {
+                element.classList.add('active-tab');
+            }
+        }
+
+        // Fungsi untuk mengaktifkan/menonaktifkan (toggle) sub-item (li.point-item)
+        document.addEventListener('DOMContentLoaded', function() {
+            const pointItems = document.querySelectorAll('.point-item');
+            
+            pointItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Toggle active class on clicked item
+                    this.classList.toggle('active');
+                    
+                    // Toggle show class on detail section
+                    const detail = this.querySelector('.point-detail');
+                    detail.classList.toggle('show');
+                    
+                    // Close other open sub-items in the same list (optional, keeps it clean)
+                    const siblings = this.parentElement.querySelectorAll('.point-item');
+                    siblings.forEach(sibling => {
+                        if (sibling !== this && sibling.classList.contains('active')) {
+                            sibling.classList.remove('active');
+                            sibling.querySelector('.point-detail').classList.remove('show');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
