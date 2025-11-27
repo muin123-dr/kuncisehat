@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Durasi Ideal dan Risiko Tidur Berlebihan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.6s ease;
+            position: relative;
+            min-height: 80vh;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #4facfe;
+        }
+
+        h1 {
+            color: #2d3748;
+            font-size: 2em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            color: #4facfe;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        .intro {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 5px solid #4facfe;
+            text-align: center;
+        }
+
+        .intro p {
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        /* --- STYLE BARU: GRID MENU & ANIMASI --- */
+        .main-menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .menu-card {
+            background: white;
+            padding: 20px 10px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 2px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-card:hover, .menu-card.active-tab {
+            border-color: #4facfe;
+            background: #f0f9ff;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(79, 172, 254, 0.2);
+        }
+
+        .menu-card.active-tab::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0; 
+            height: 0; 
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid #4facfe; /* Panah indikator */
+        }
+
+        .menu-title {
+            display: block;
+            margin-top: 10px;
+            font-weight: 700;
+            color: #0891b2;
+            font-size: 1em;
+            line-height: 1.2;
+        }
+
+        /* Animasi Bounce (Naik Turun) */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating-emoji {
+            display: inline-block;
+            font-size: 2.5em;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        /* Container untuk konten yang bisa di-hide/show */
+        .content-container {
+            display: none; /* Default hidden */
+            animation: slideDown 0.5s ease forwards;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* --- END STYLE BARU --- */
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            color: #0891b2;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        /* Dihapus bullet point section title asli agar lebih bersih di mode tab */
+        /* .section-title::before { ... } */
+
+        .accordion-item {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-item:hover {
+            border-color: #4facfe;
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.2);
+        }
+
+        .accordion-header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 18px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.05em;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-header:active {
+            transform: scale(0.98);
+        }
+
+        .accordion-icon {
+            font-size: 1.3em;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            background: #f8fafc;
+        }
+
+        .accordion-content-inner {
+            padding: 20px;
+            color: #4a5568;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 2000px;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #fef3c7 0%, #fde68a 100%);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+        .age-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-left: 4px solid #4facfe;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .age-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(79, 172, 254, 0.2);
+        }
+
+        .age-label {
+            font-weight: 600;
+            color: #0891b2;
+        }
+
+        .age-duration {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-left: 5px solid #ef4444;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .warning-box h4 {
+            color: #dc2626;
+            margin-bottom: 10px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-left: 5px solid #3b82f6;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .info-box h4 {
+            color: #1e40af;
+            margin-bottom: 10px;
+        }
+
+        .conclusion {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .conclusion p {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .quote {
+            font-style: italic;
+            font-size: 1.2em;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            border-left: 4px solid white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border-left: 4px solid #4facfe;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #0891b2;
+        }
+
+        .stat-label {
+            color: #4a5568;
+            font-size: 0.9em;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #4facfe;
+            font-weight: bold;
+        }
+
+        .danger-list li::before {
+            content: '⚠';
+            color: #ef4444;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+            h1 { font-size: 1.5em; }
+            .section-title { font-size: 1.3em; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .age-card { flex-direction: column; text-align: center; gap: 10px; }
+            .main-menu-grid { grid-template-columns: 1fr 1fr; }
+            .floating-emoji { font-size: 2em; }
+            .menu-title { font-size: 0.9em; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+       .navigation-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+   
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .nav-btn {
+            background-color: #764ba2;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-btn:hover {
+            background-color: #667eea;
+        }
+
+
+        footer {
+            position: fixed;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 100;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .social-btn:focus,
+        .social-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+            outline: none;
+        }
+
+        .whatsapp { background-color: #25D366; }
+        .instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+
+        svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 2rem; }
+            .subtitle { font-size: 0.9rem; margin-bottom: 1.5rem; }
+            footer { bottom: 0.8rem; gap: 0.8rem; }
+            .social-btn { width: 42px; height: 42px; }
+            svg { width: 20px; height: 20px; }
+            .main-menu-grid { grid-template-columns: 1fr 1fr; }
+            .floating-emoji { font-size: 2em; }
+            .menu-title { font-size: 0.9em; }
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⏰ Durasi & Risiko Tidur</h1>
+            <p class="subtitle">Menemukan Keseimbangan Sempurna untuk Kesehatan</p>
+        </header>
+
+        <div class="intro">
+            <p>Silakan klik tombol di bawah untuk mengetahui detail durasi tidur ideal, risiko berlebih, dan tips menjaga keseimbangan:</p>
+        </div>
+
+        <div class="main-menu-grid">
+            <div class="menu-card" onclick="showSection('durasi-ideal', this)">
+                <span class="floating-emoji" style="animation-delay: 0s;">⏰</span>
+                <span class="menu-title">Durasi Ideal</span>
+            </div>
+            <div class="menu-card" onclick="showSection('bahaya-tidur', this)">
+                <span class="floating-emoji" style="animation-delay: 0.5s;">⚠️</span>
+                <span class="menu-title">Bahaya Tidur Berlebihan</span>
+            </div>
+            <div class="menu-card" onclick="showSection('penyebab-tidur', this)">
+                <span class="floating-emoji" style="animation-delay: 1s;">❓</span>
+                <span class="menu-title">Mengapa Tidur Terlalu Lama?</span>
+            </div>
+            <div class="menu-card" onclick="showSection('keseimbangan', this)">
+                <span class="floating-emoji" style="animation-delay: 1.5s;">⚖️</span>
+                <span class="menu-title">Mencari Keseimbangan</span>
+            </div>
+        </div>
+        <div id="durasi-ideal" class="content-container">
+            <div class="section">
+                <h2 class="section-title">Durasi Tidur yang Ideal</h2>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>👶 Bayi (0-11 bulan)</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <div class="age-card">
+                                <div class="age-label">Bayi Baru Lahir (0-3 bulan)</div>
+                                <div class="age-duration">14-17 jam/hari</div>
+                            </div>
+                            <p style="margin-bottom: 10px;">Pola tidur tidak teratur, bangun sering untuk menyusu.</p>
+                            
+                            <div class="age-card">
+                                <div class="age-label">Bayi (4-11 bulan)</div>
+                                <div class="age-duration">12-15 jam/hari</div>
+                            </div>
+                            <p>Pola tidur malam mulai teratur, tidur siang masih penting.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>🧒 Balita dan Anak Prasekolah (1-5 tahun)</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <div class="age-card">
+                                <div class="age-label">Balita (1-2 tahun)</div>
+                                <div class="age-duration">11-14 jam/hari</div>
+                            </div>
+                            <p style="margin-bottom: 10px;">Termasuk tidur siang yang masih sangat penting untuk pertumbuhan.</p>
+                            
+                            <div class="age-card">
+                                <div class="age-label">Anak Prasekolah (3-5 tahun)</div>
+                                <div class="age-duration">10-13 jam/hari</div>
+                            </div>
+                            <p>Sebagian anak masih membutuhkan tidur siang pendek.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>📚 Anak Usia Sekolah (6-13 tahun)</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <div class="age-card">
+                                <div class="age-label">Usia Sekolah</div>
+                                <div class="age-duration">9-11 jam/hari</div>
+                            </div>
+                            <p>Sangat penting untuk konsentrasi belajar, memori, dan perkembangan kognitif optimal.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>🎓 Remaja (14-17 tahun)</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <div class="age-card">
+                                <div class="age-label">Remaja</div>
+                                <div class="age-duration">8-10 jam/hari</div>
+                            </div>
+                            <p>Mendukung perkembangan fisik yang pesat, kematangan emosional, dan fungsi kognitif optimal. Fase kritis pertumbuhan otak.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>👨 Dewasa Muda & Dewasa (18-64 tahun)</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <div class="age-card">
+                                <div class="age-label">Dewasa Muda (18-25 tahun)</div>
+                                <div class="age-duration">7-9 jam/malam</div>
+                            </div>
+                            <div class="age-card">
+                                <div class="age-label">Dewasa (26-64 tahun)</div>
+                                <div class="age-duration">7-9 jam/malam</div>
+                            </div>
+                            <p>Durasi optimal untuk kesehatan fisik, fungsi kognitif, produktivitas, dan kesejahteraan emosional.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>👴 Lansia (65+ tahun)</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <div class="age-card">
+                                <div class="age-label">Lansia</div>
+                                <div class="age-duration">7-8 jam/malam</div>
+                            </div>
+                            <p>Kualitas tidur sering menjadi tantangan karena perubahan ritme sirkadian dan kondisi kesehatan. Fokus pada kualitas lebih penting dari kuantitas.</p>
+                            <div class="info-box">
+                                <p><strong>Catatan Penting:</strong> Angka-angka di atas adalah panduan umum. Dengarkan tubuh Anda dan perhatikan berapa lama Anda merasa benar-benar beristirahat.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="bahaya-tidur" class="content-container">
+            <div class="section">
+                <h2 class="section-title">Bahaya Tidur Berlebihan</h2>
+
+                <div class="warning-box">
+                    <h4>⚠️ Peringatan</h4>
+                    <p>Tidur terlalu lama (hipersomnia sekunder), terutama secara rutin melebihi 9-10 jam per malam untuk dewasa, dapat menimbulkan berbagai masalah kesehatan serius.</p>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>🤕 Sakit Kepala dan Nyeri Tubuh</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="danger-list">
+                                <li><span class="highlight">Sakit Kepala:</span> Fluktuasi neurotransmitter selama tidur berkepanjangan diduga menjadi pemicu migrain dan sakit kepala.</li>
+                                <li><span class="highlight">Nyeri Tubuh:</span> Terlalu lama berbaring tanpa bergerak menyebabkan otot kaku dan nyeri, terutama di punggung, leher, dan bahu.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>⚖️ Obesitas dan Gangguan Metabolisme</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="danger-list">
+                                <li><span class="highlight">Peningkatan Risiko Obesitas:</span> Kurangnya aktivitas fisik dan gangguan metabolisme terkait tidur berlebihan berkorelasi dengan penambahan berat badan.</li>
+                                <li><span class="highlight">Diabetes Tipe 2:</span> Tidur berlebihan mengganggu regulasi gula darah dan meningkatkan resistensi insulin.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>🧠 Gangguan Mental dan Kognitif</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="danger-list">
+                                <li><span class="highlight">Depresi dan Kecemasan:</span> Sering dikaitkan sebagai gejala maupun faktor yang memperburuk kondisi mental.</li>
+                                <li><span class="highlight">Rasa Lesu:</span> Perasaan lelah berlebihan dan sulit berkonsentrasi sepanjang hari.</li>
+                                <li><span class="highlight">Penurunan Fungsi Kognitif:</span> Daya ingat, konsentrasi, dan kemampuan berpikir menurun.</li>
+                                <li><span class="highlight">Risiko NSSI pada Remaja:</span> Peningkatan risiko perilaku menyakiti diri sendiri pada remaja.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>❤️ Penyakit Jantung dan Kesehatan Vital</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="danger-list">
+                                <li><span class="highlight">Penyakit Kardiovaskular:</span> Penelitian observasional menunjukkan hubungan antara durasi tidur sangat panjang dengan peningkatan risiko penyakit jantung.</li>
+                                <li><span class="highlight">Risiko Kematian Dini:</span> Tidur berlebihan kronis dikaitkan dengan peningkatan risiko kematian dari berbagai penyebab.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>😴 Sleep Inertia (Rasa Lelah Berlebihan)</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>Bangun setelah tidur terlalu lama justru membuat merasa lebih lelah, pusing, dan bingung. Kondisi ini disebut "sleep drunkenness" atau mabuk tidur.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="penyebab-tidur" class="content-container">
+            <div class="section">
+                <h2 class="section-title">Mengapa Tidur Terlalu Lama?</h2>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>😷 Gangguan Tidur</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>Sleep apnea, narkolepsi, atau gangguan ritme sirkadian dapat menyebabkan tidur tidak berkualitas sehingga tubuh membutuhkan durasi lebih lama.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>🏥 Kondisi Medis</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>Anemia, hipotiroidisme, fibromyalgia, atau penyakit kronis lainnya dapat menyebabkan kelelahan berlebihan dan kebutuhan tidur yang meningkat.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>🍷 Gaya Hidup</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>Konsumsi alkohol, efek samping obat penenang, kurang paparan cahaya matahari, dan kurangnya aktivitas fisik dapat memicu tidur berlebihan.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>😔 Masalah Psikologis</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>Depresi seringkali dikaitkan dengan tidur berlebihan sebagai mekanisme koping atau sebagai gejala dari kondisi tersebut.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>🥗 Asupan Nutrisi</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>Rendahnya asupan tiamin (vitamin B1) dikaitkan dengan kecenderungan tidur berlebihan, yang dapat diperburuk oleh penggunaan alkohol.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="keseimbangan" class="content-container">
+            <div class="section">
+                <h2 class="section-title">Mencari Keseimbangan</h2>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>⏰ Jadwal Tidur Teratur</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>Tidur dan bangun pada waktu yang sama setiap hari, termasuk akhir pekan. Konsistensi membantu mengatur ritme sirkadian tubuh.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>🌙 Rutinitas Tidur Menenangkan</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>Lakukan aktivitas relaksasi sebelum tidur seperti membaca, meditasi, atau mandi air hangat untuk memberi sinyal pada tubuh bahwa sudah waktunya tidur.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>🛏️ Lingkungan Tidur Nyaman</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>Pastikan kamar tidur gelap, tenang, dan sejuk (suhu ideal 18-22°C) dengan kasur dan bantal yang nyaman.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>📱 Batasi Cahaya Biru</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>Hindari perangkat elektronik setidaknya satu jam sebelum tidur karena cahaya biru menghambat produksi melatonin.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>🧘 Kelola Stres</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>Temukan cara sehat untuk mengelola stres seperti yoga, meditasi, atau teknik pernapasan dalam.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>🩺 Periksa Kesehatan</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>Konsultasikan dengan dokter jika mengalami kesulitan tidur atau terus-menerus merasa perlu tidur terlalu lama.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>🚨 Kapan Harus Khawatir?</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p style="margin-bottom: 15px;">Waspada jika disertai gejala:</p>
+                            <ul class="danger-list">
+                                <li><span class="highlight">Lelah Terus-Menerus</span> (Sleep drunkenness)</li>
+                                <li><span class="highlight">Gangguan Konsentrasi</span> & sering lupa</li>
+                                <li><span class="highlight">Mendengkur Keras</span> (Tanda sleep apnea)</li>
+                                <li><span class="highlight">Perubahan Mood Drastis</span></li>
+                            </ul>
+                            <div class="warning-box" style="margin-top: 15px;">
+                                <h4>⚕️ Segera Konsultasi ke Dokter</h4>
+                                <p>Jika kebiasaan tidur Anda mengganggu produktivitas atau disertai gejala yang tidak biasa, segera konsultasikan dengan profesional medis.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="conclusion">
+            <h3 style="margin-bottom: 20px;">💡 Kesimpulan</h3>
+            <p>Tidur yang cukup dan berkualitas adalah investasi penting untuk kesehatan jangka panjang. Baik kekurangan maupun kelebihan tidur dapat meningkatkan risiko berbagai masalah kesehatan.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">7-9</div>
+                    <div class="stat-label">Jam tidur ideal dewasa</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">18-22°C</div>
+                    <div class="stat-label">Suhu kamar ideal</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">1-2 jam</div>
+                    <div class="stat-label">Hindari gadget sebelum tidur</div>
+                </div>
+            </div>
+            
+            <div class="quote">
+                "Keseimbangan adalah kunci - tidak terlalu sedikit, tidak terlalu banyak. Tidur yang tepat adalah fondasi hidup sehat dan produktif."
+            </div>
+        </div>
+    </div>
+       
+        <div class="navigation-container">
+            <a href="https://muin123-dr.github.io/kuncisehat/021.html" class="nav-btn nav-btn-prev">&lt;&lt; kembali</a>
+            <a href="https://muin123-dr.github.io/kuncisehat/000.html" class="nav-btn nav-btn-toc">(daftar isi)</a>
+            <a href="https://muin123-dr.github.io/kuncisehat/023.html" class="nav-btn nav-btn-next">lanjut &gt;&gt;</a>
+        </div>
+
+        <footer>
+    <a href="https://whatsapp.com/channel/0029VbAtZNp47Xe6JFu65N2u" class="social-btn whatsapp" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Channel">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M20.52 3.48a11.9 11.9 0 00-16.84 0 11.89 11.89 0 00-3.5 8.42c0 2.1.55 4.15 1.6 5.95L2 22l4.25-1.4a11.83 11.83 0 005.95 1.6c4.46 0 8.6-2.8 10.02-7.07a11.9 11.9 0 00-1.7-10.65zm-8.2 14.6a9.52 9.52 0 01-4.8-1.3l-.35-.2-3 1 1-3.1-.23-.36a9.5 9.5 0 0115.7-11.2 9.48 9.48 0 01-7.3 14.3zm5.07-6.4c-.28-.14-1.67-.82-1.93-.91-.26-.1-.45-.14-.64.14s-.73.9-.9 1.08c-.16.18-.32.2-.6.07a7.8 7.8 0 01-2.3-1.42 8.8 8.8 0 01-1.63-2c-.18-.3 0-.46.13-.6.14-.14.3-.34.44-.5a1.76 1.76 0 00.26-.44c.09-.15.05-.27-.02-.4-.07-.13-.64-1.54-.88-2.1-.23-.55-.46-.48-.64-.49a1.2 1.2 0 00-.45-.02c-.15 0-.4.06-.6.3-.2.24-.77.75-.77 1.83s.79 2.12.9 2.28c.1.15 1.55 2.37 3.77 3.32a13.4 13.4 0 001.76.74 1.78 1.78 0 002.03-2.57z"/>
+      </svg>
+    </a>
+
+    <a href="https://www.instagram.com/dr.msmuin?igsh=MTY2NHZmODUydm1ycA==" class="social-btn instagram" target="_blank" rel="noopener noreferrer" aria-label="Instagram Profile">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M7.75 2h8.5A5.75 5.75 0 0122 7.75v8.5A5.75 5.75 0 0116.25 22h-8.5A5.75 5.75 0 012 16.25v-8.5A5.75 5.75 0 017.75 2zm0 1.5a4.25 4.25 0 00-4.25 4.25v8.5a4.25 4.25 0 004.25 4.25h8.5a4.25 4.25 0 004.25-4.25v-8.5a4.25 4.25 0 00-4.25-4.25h-8.5zm8.75 2.25a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5zM12 7a5 5 0 110 10 5 5 0 010-10zm0 1.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z"/>
+      </svg>
+    </a>
+  </footer>
+    <div style="text-align: center;">
+    <p>.</p>
+    <p>© 2025 Gen Zehat</p>
+    
+    <p>Ikhtiar Sehat adalah bentuk rasa Syukur</p>
+    <p>🔅🔅🔅</p>
+    </div>
+    <div>
+    <p>.</p>
+    
+    </div>
+
+
+
+    <script>
+        // FUNGSI TOGGLE MENU / TAB
+        function showSection(sectionId, element) {
+            // Sembunyikan semua konten
+            document.querySelectorAll('.content-container').forEach(el => {
+                el.style.display = 'none';
+            });
+
+            // Hapus kelas aktif dari semua tombol menu
+            document.querySelectorAll('.menu-card').forEach(card => {
+                card.classList.remove('active-tab');
+            });
+
+            // Tampilkan section yang dituju
+            const target = document.getElementById(sectionId);
+            if (target) {
+                target.style.display = 'block';
+                // Scroll sedikit agar nyaman dilihat
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            // Tambahkan highlight ke tombol yang diklik
+            if (element) {
+                element.classList.add('active-tab');
+            }
+        }
+
+        // Script Accordion (Buka/Tutup Item di dalam Section)
+        const accordionItems = document.querySelectorAll('.accordion-item');
+
+        accordionItems.forEach(item => {
+            const header = item.querySelector('.accordion-header');
+            
+            header.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                // Tutup semua item lain
+                accordionItems.forEach(i => i.classList.remove('active'));
+                
+                // Buka item yang diklik jika belum aktif
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Efek sentuh untuk mobile
+        accordionItems.forEach(item => {
+            const header = item.querySelector('.accordion-header');
+            
+            header.addEventListener('touchstart', () => {
+                header.style.opacity = '0.8';
+            });
+            
+            header.addEventListener('touchend', () => {
+                header.style.opacity = '1';
+            });
+        });
+    </script>
+</body>
+</html>
