@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qailulah (Napping) - Tidur Siang Sehat</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            min-height: 80vh;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo img {
+            max-width: 150px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #764ba2;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        /* --- STYLE BARU: GRID MENU & ANIMASI --- */
+        .main-menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .menu-card {
+            background: white;
+            padding: 20px 10px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border: 2px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-card:hover, .menu-card.active-tab {
+            border-color: #764ba2;
+            background: #f3e5f5;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(118, 75, 162, 0.2);
+        }
+
+        .menu-card.active-tab::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0; 
+            height: 0; 
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid #764ba2;
+        }
+
+        .menu-title {
+            display: block;
+            margin-top: 10px;
+            font-weight: 700;
+            color: #764ba2;
+            font-size: 0.95em;
+            line-height: 1.3;
+        }
+
+        /* Animasi Bounce (Naik Turun) */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .floating-emoji {
+            display: inline-block;
+            font-size: 2.2em;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        /* Container untuk konten yang bisa di-hide/show */
+        .content-container {
+            display: none; /* Default hidden */
+            animation: slideDown 0.5s ease forwards;
+            margin-bottom: 30px;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* --- END STYLE BARU --- */
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        /* Header section diubah jadi statis karena interaksi pindah ke menu atas */
+        .section-title {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .section-title h2 {
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        /* Konten selalu terbuka di dalam container aktif */
+        .content {
+            background: #f8f9fa;
+            border-radius: 0 0 10px 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .content h3 {
+            color: #764ba2;
+            margin: 15px 0 10px 0;
+            font-size: 1.1em;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
+        }
+
+        .content p, .content ul {
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .content ul {
+            padding-left: 20px;
+        }
+
+        .content li {
+            margin-bottom: 8px;
+        }
+
+        .navigation-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background-color: #764ba2;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-btn:hover {
+            background-color: #667eea;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 100;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .social-btn:focus,
+        .social-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+            outline: none;
+        }
+
+        .whatsapp { background-color: #25D366; }
+        .instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+
+        svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        .conclusion-box {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            border-left: 5px solid #764ba2;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 2rem; }
+            .subtitle { font-size: 0.9rem; margin-bottom: 1.5rem; }
+            footer { bottom: 0.8rem; gap: 0.8rem; }
+            .social-btn { width: 42px; height: 42px; }
+            svg { width: 20px; height: 20px; }
+            .main-menu-grid { grid-template-columns: 1fr 1fr; }
+            .floating-emoji { font-size: 2em; }
+            .menu-title { font-size: 0.85em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://muin123-dr.github.io/Website/gen%20zehat.png" alt="Logo">
+        </div>
+        
+        <h1>Qailulah (Napping)</h1>
+        <p class="subtitle">Tidur Siang Singkat untuk Kesehatan Optimal</p>
+
+        <div class="main-menu-grid">
+            <div class="menu-card" onclick="showSection('kognitif', this)">
+                <span class="floating-emoji" style="animation-delay: 0s;">🧠</span>
+                <span class="menu-title">Meningkatkan Fungsi Kognitif</span>
+            </div>
+            <div class="menu-card" onclick="showSection('mental', this)">
+                <span class="floating-emoji" style="animation-delay: 0.2s;">💚</span>
+                <span class="menu-title">Kesehatan Mental & Emosional</span>
+            </div>
+            <div class="menu-card" onclick="showSection('fisik', this)">
+                <span class="floating-emoji" style="animation-delay: 0.4s;">❤️</span>
+                <span class="menu-title">Mendukung Kesehatan Fisik</span>
+            </div>
+            <div class="menu-card" onclick="showSection('produktivitas', this)">
+                <span class="floating-emoji" style="animation-delay: 0.6s;">⚡</span>
+                <span class="menu-title">Produktivitas & Kualitas Hidup</span>
+            </div>
+            <div class="menu-card" onclick="showSection('panduan', this)">
+                <span class="floating-emoji" style="animation-delay: 0.8s;">⏰</span>
+                <span class="menu-title">Panduan Efektif</span>
+            </div>
+            <div class="menu-card" onclick="showSection('pelengkap', this)">
+                <span class="floating-emoji" style="animation-delay: 1s;">🌙</span>
+                <span class="menu-title">Pelengkap Tidur Malam</span>
+            </div>
+        </div>
+
+        <div id="kognitif" class="content-container">
+            <div class="section">
+                <div class="section-title">
+                    <h2>🧠 Meningkatkan Fungsi Kognitif</h2>
+                </div>
+                <div class="content">
+                    <h3>Fokus & Produktivitas</h3>
+                    <p>Tidur siang 10–30 menit menyegarkan otak, meningkatkan konsentrasi, dan kewaspadaan, terutama bagi pekerja, pelajar, atau mereka yang menghadapi deadline.</p>
+                    
+                    <h3>Memori & Belajar</h3>
+                    <p>Saat tidur, otak mengonsolidasi memori jangka pendek menjadi jangka panjang, memperkuat kemampuan mengingat dan menyerap informasi baru.</p>
+                    
+                    <h3>Kreativitas</h3>
+                    <p>Otak yang rileks pasca-tidur siang lebih mudah menghubungkan ide-ide inovatif, memicu solusi brilian untuk masalah kompleks.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="mental" class="content-container">
+            <div class="section">
+                <div class="section-title">
+                    <h2>💚 Kesehatan Mental & Emosional</h2>
+                </div>
+                <div class="content">
+                    <h3>Reduksi Stres</h3>
+                    <p>Kadar hormon kortisol (penyebab stres) menurun drastis selama tidur siang, membuat pikiran lebih tenang.</p>
+                    
+                    <h3>Peningkatan Mood</h3>
+                    <p>Tubuh melepaskan serotonin pasca-napping, hormon yang meningkatkan perasaan bahagia dan mengurangi kecemasan.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="fisik" class="content-container">
+            <div class="section">
+                <div class="section-title">
+                    <h2>❤️ Dukungan untuk Kesehatan Fisik</h2>
+                </div>
+                <div class="content">
+                    <h3>Jantung Sehat</h3>
+                    <p>Tidur siang teratur dikaitkan dengan penurunan tekanan darah dan risiko penyakit jantung. Studi juga menunjukkan hubungan antara durasi tidur ideal (7–9 jam per malam) dengan rendahnya risiko sindrom metabolik.</p>
+                    
+                    <h3>Pemulihan Energi & Otot</h3>
+                    <p>Seperti mengisi ulang baterai, tidur siang memulihkan energi tubuh dan mempercepat pemulihan otot, ideal untuk atlet atau pekerja fisik.</p>
+                    
+                    <h3>Imunitas</h3>
+                    <p>Tidur singkat membantu sistem imun bekerja optimal, melawan infeksi, dan peradangan.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="produktivitas" class="content-container">
+            <div class="section">
+                <div class="section-title">
+                    <h2>⚡ Produktivitas & Kualitas Hidup</h2>
+                </div>
+                <div class="content">
+                    <h3>Efisiensi Kerja</h3>
+                    <p>Napping 20 menit meningkatkan performa hingga 34% (NASA), terutama bagi pekerja shift atau yang kurang tidur malam.</p>
+                    
+                    <h3>Keseimbangan Hidup</h3>
+                    <p>Tidur siang mengurangi risiko burnout, membuat tubuh lebih siap menghadapi tantangan harian.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="panduan" class="content-container">
+            <div class="section">
+                <div class="section-title">
+                    <h2>⏰ Panduan Napping Efektif</h2>
+                </div>
+                <div class="content">
+                    <h3>Durasi Ideal</h3>
+                    <ul>
+                        <li><strong>10–30 Menit:</strong> Cukup untuk menyegarkan otak tanpa memasuki fase tidur dalam yang memicu sleep inertia (lemas pasca-bangun).</li>
+                        <li><strong>Hindari >30 Menit:</strong> Tidur panjang justru mengurangi kewaspadaan dan mengacaukan siklus tidur malam.</li>
+                    </ul>
+
+                    <h3>Waktu Tepat</h3>
+                    <ul>
+                        <li><strong>Pukul 13.00–15.00:</strong> Sesuai ritme sirkadian, ketika energi alami tubuh menurun pasca-makan siang.</li>
+                        <li><strong>Jangan Terlalu Sore:</strong> Napping di atas pukul 15.00 berisiko mengganggu tidur malam.</li>
+                    </ul>
+
+                    <h3>Lingkungan Optimal</h3>
+                    <ul>
+                        <li><strong>Tenang & Gelap:</strong> Gunakan penutup mata atau earplug jika diperlukan.</li>
+                        <li><strong>Suhu Nyaman:</strong> Ruangan sejuk (22–25°C) membantu tidur lebih nyenyak.</li>
+                    </ul>
+
+                    <h3>Hindari Kafein & Makan Berat</h3>
+                    <p>Kafein sebelum tidur siang bisa mengganggu kualitas istirahat.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="pelengkap" class="content-container">
+            <div class="section">
+                <div class="section-title">
+                    <h2>🌙 Napping sebagai Pelengkap Tidur Malam</h2>
+                </div>
+                <div class="content">
+                    <p>Meski tidur siang bermanfaat, tidur malam tetap prioritas utama:</p>
+                    <ul>
+                        <li><strong>Durasi Tidur Malam Ideal:</strong> 7–9 jam untuk dewasa. Kurang dari 6 jam atau lebih dari 9 jam terkait risiko obesitas, diabetes, dan gangguan kardiovaskular.</li>
+                        <li><strong>Napping sebagai Solusi:</strong> Bagi yang kurang tidur malam (misalnya pekerja shift), tidur siang 30 menit bisa mengurangi dampak negatif kelelahan.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="conclusion-box">
+            <h2 style="color: #764ba2; margin-bottom: 15px;">✨ Kesimpulan</h2>
+            <p>Tidur siang bukanlah kebiasaan khusus anak-anak atau kemalasan, melainkan strategi cerdas untuk menjaga kesehatan holistik. Dengan durasi dan waktu yang tepat, napping bisa menjadi "tombol reset" bagi otak, penjaga jantung, dan booster produktivitas.</p>
+            <p><strong>Jadikan tidur siang sebagai ritual harian—investasi kecil dengan untung besar untuk tubuh dan pikiran!</strong></p>
+        </div>
+
+        <div class="navigation-container">
+            <a href="https://muin123-dr.github.io/kuncisehat/023.html" class="nav-btn nav-btn-prev">&lt;&lt; kembali</a>
+            <a href="https://muin123-dr.github.io/kuncisehat/000.html" class="nav-btn nav-btn-toc">(daftar isi)</a>
+            <a href="https://muin123-dr.github.io/kuncisehat/025.html" class="nav-btn nav-btn-next">lanjut &gt;&gt;</a>
+        </div>
+
+        <footer>
+            <a href="https://whatsapp.com/channel/0029VbAtZNp47Xe6JFu65N2u" class="social-btn whatsapp" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Channel">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M20.52 3.48a11.9 11.9 0 00-16.84 0 11.89 11.89 0 00-3.5 8.42c0 2.1.55 4.15 1.6 5.95L2 22l4.25-1.4a11.83 11.83 0 005.95 1.6c4.46 0 8.6-2.8 10.02-7.07a11.9 11.9 0 00-1.7-10.65zm-8.2 14.6a9.52 9.52 0 01-4.8-1.3l-.35-.2-3 1 1-3.1-.23-.36a9.5 9.5 0 0115.7-11.2 9.48 9.48 0 01-7.3 14.3zm5.07-6.4c-.28-.14-1.67-.82-1.93-.91-.26-.1-.45-.14-.64.14s-.73.9-.9 1.08c-.16.18-.32.2-.6.07a7.8 7.8 0 01-2.3-1.42 8.8 8.8 0 01-1.63-2c-.18-.3 0-.46.13-.6.14-.14.3-.34.44-.5a1.76 1.76 0 00.26-.44c.09-.15.05-.27-.02-.4-.07-.13-.64-1.54-.88-2.1-.23-.55-.46-.48-.64-.49a1.2 1.2 0 00-.45-.02c-.15 0-.4.06-.6.3-.2.24-.77.75-.77 1.83s.79 2.12.9 2.28c.1.15 1.55 2.37 3.77 3.32a13.4 13.4 0 001.76.74 1.78 1.78 0 002.03-2.57z"/>
+                </svg>
+            </a>
+            <a href="https://www.instagram.com/dr.msmuin?igsh=MTY2NHZmODUydm1ycA==" class="social-btn instagram" target="_blank" rel="noopener noreferrer" aria-label="Instagram Profile">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M7.75 2h8.5A5.75 5.75 0 0122 7.75v8.5A5.75 5.75 0 0116.25 22h-8.5A5.75 5.75 0 012 16.25v-8.5A5.75 5.75 0 017.75 2zm0 1.5a4.25 4.25 0 00-4.25 4.25v8.5a4.25 4.25 0 004.25 4.25h8.5a4.25 4.25 0 004.25-4.25v-8.5a4.25 4.25 0 00-4.25-4.25h-8.5zm8.75 2.25a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5zM12 7a5 5 0 110 10 5 5 0 010-10zm0 1.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z"/>
+                </svg>
+            </a>
+        </footer>
+        <div style="text-align: center;">
+            <p>© 2025 Gen Zehat</p>
+            <p>Ikhtiar Sehat adalah bentuk rasa Syukur</p>
+            <p>🔅🔅🔅</p>
+        </div>
+        <div><p>.</p></div>
+    </div>
+
+    <script>
+        // FUNGSI TOGGLE MENU / TAB
+        function showSection(sectionId, element) {
+            // Sembunyikan semua konten
+            document.querySelectorAll('.content-container').forEach(el => {
+                el.style.display = 'none';
+            });
+
+            // Hapus kelas aktif dari semua tombol menu
+            document.querySelectorAll('.menu-card').forEach(card => {
+                card.classList.remove('active-tab');
+            });
+
+            // Tampilkan section yang dituju
+            const target = document.getElementById(sectionId);
+            if (target) {
+                target.style.display = 'block';
+                // Scroll sedikit agar nyaman dilihat
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            // Tambahkan highlight ke tombol yang diklik
+            if (element) {
+                element.classList.add('active-tab');
+            }
+        }
+    </script>
+</body>
+</html>
