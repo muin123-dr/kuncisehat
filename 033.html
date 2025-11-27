@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dampak Kurang Gerak</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2E8B57;
+            --secondary-color: #3CB371;
+            --accent-color: #20B2AA;
+            --light-color: #F5FFFA;
+            --dark-color: #2F4F4F;
+            --text-color: #333;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 0 0 20px 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid white;
+            box-shadow: var(--shadow);
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin: 25px 0 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        /* Modifikasi untuk struktur ringkas */
+        .summary-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .summary-item {
+            margin-bottom: 20px;
+            background-color: #FFE4E1;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .summary-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .summary-title {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            border-radius: 15px;
+            transition: var(--transition);
+        }
+
+        .summary-title:hover {
+            background-color: #f0fff0;
+        }
+
+        .summary-title .emoji {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            display: inline-block;
+        }
+
+        .summary-title .toggle-icon {
+            margin-left: auto;
+            transition: var(--transition);
+        }
+
+        .summary-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.7s ease-in-out;
+            padding: 0 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .summary-detail.show {
+            max-height: 3000px; /* Nilai besar agar cukup untuk semua konten */
+            padding: 15px 20px 20px;
+        }
+
+        .summary-item.active .summary-title {
+            color: var(--primary-color);
+            border-radius: 15px 15px 0 0;
+            background-color: #e8f5e9;
+        }
+
+        .summary-item.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Animasi Naik-Turun Sederhana */
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(-5%);
+            }
+            50% {
+                transform: translateY(0);
+            }
+        }
+
+        .animate-bounce {
+            animation: bounce 1.5s infinite ease-in-out;
+        }
+
+        /* Styling konten di dalam detail */
+        .detail-content {
+            padding: 10px 0;
+        }
+
+        /* Penyesuaian untuk tampilan poin penyakit */
+        .detail-content .point-item {
+            /* display: flex; REMOVED */ 
+            margin-bottom: 15px;
+            padding: 0;
+            background-color: transparent;
+            border: none;
+            border-left: 3px solid var(--secondary-color);
+            padding-left: 10px;
+            cursor: default;
+            transform: none !important;
+        }
+        
+        /* Baris judul (Emoji + Teks Tebal) */
+        .detail-content .point-item .point-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 3px;
+            font-weight: bold;
+        }
+        
+        .detail-content .point-item .point-title span[role="img"] {
+             margin-right: 10px;
+        }
+        
+        /* Baris penjelasan */
+        .detail-content .point-item p {
+            margin: 0; /* Hilangkan margin bawaan p */
+            padding-left: 28px; /* Indentasi agar sejajar dengan teks judul */
+        }
+        /* End of Penyesuaian */
+
+        .stat-box {
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        
+        .highlight {
+            background-color: #fffacd;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding: 15px 0;
+        }
+        
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .nav-btn:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+        
+        /* Kesimpulan dan Footer */
+        .kesimpulan {
+            background-color: #fceceb; /* Warna untuk peringatan/dampak */
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: var(--shadow);
+            border: 1px solid #e57373; 
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 30px;
+            background-color: var(--dark-color);
+            color: white;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            color: var(--dark-color);
+            border-radius: 50%;
+            text-decoration: none;
+            font-size: 24px;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-5px);
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .whatsapp {
+            color: #25D366;
+        }
+        
+        .instagram {
+            color: #E4405F;
+        }
+        
+        /* Tambahan styling untuk Gen Zehat */
+        .footer-logo-text {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 15px;
+        }
+        .gen-red {
+            color: #FF0000;
+        }
+        .zehat-green {
+            color: #3CB371; /* Hijau yang lebih cerah */
+        }
+        .ikhtiar-text {
+            font-style: italic;
+            margin-top: 5px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .summary-title {
+                padding: 15px;
+                font-size: 1.1rem;
+            }
+
+            .summary-title .emoji {
+                font-size: 1.2rem;
+                margin-right: 10px;
+            }
+            
+            .nav-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="https://muin123-dr.github.io/Website/gen%20zehat.png" alt="Logo Gen Zehat">
+        </div>
+        <h1>Dampak Kurang Gerak</h1>
+    </header>
+    
+    <div class="container">
+        
+        <ul class="summary-list">
+            
+            <li class="summary-item" data-section="global">
+                <div class="summary-title">
+                    <span class="emoji animate-bounce">🌍</span>
+                    <span>Dampak Global</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="summary-detail">
+                    <div class="detail-content">
+                        <div class="stat-box">
+                            <p><strong>Biaya ekonomi global akibat gaya hidup sedentari:</strong></p>
+                            <p class="highlight" style="background-color: transparent; color: white; font-size: 1.2rem;">$67,5 miliar/tahun (WHO, 2019)</p>
+                        </div>
+                        <p>Di Indonesia, <span class="highlight">93,5% remaja</span> kurang aktivitas fisik (Riskesdas 2018), meningkatkan risiko stunting dan gangguan metabolik.</p>
+                    </div>
+                </div>
+            </li>
+
+            <li class="summary-item" data-section="fisik">
+                <div class="summary-title">
+                    <span class="emoji animate-bounce">❌</span>
+                    <span>Penyakit Fisik</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="summary-detail">
+                    <div class="detail-content">
+                        
+                        <div class="point-item">
+                            <div class="point-title">
+                                <span role="img" aria-label="Obesitas">🍔</span>
+                                <strong>Obesitas:</strong>
+                            </div>
+                            <p>Kurangnya aktivitas fisik menyebabkan tubuh tidak membakar kalori secara efektif, sehingga terjadi penumpukan lemak yang berlebihan.</p>
+                        </div>
+                        <div class="point-item">
+                            <div class="point-title">
+                                <span role="img" aria-label="Diabetes">🩸</span>
+                                <strong>Diabetes Melitus Tipe 2:</strong>
+                            </div>
+                            <p>Kurang gerak dapat menyebabkan resistensi insulin, di mana tubuh menjadi kurang sensitif terhadap insulin yang mengatur kadar gula darah.</p>
+                        </div>
+                        <div class="point-item">
+                            <div class="point-title">
+                                <span role="img" aria-label="Jantung">❤️‍🩹</span>
+                                <strong>Penyakit Jantung:</strong>
+                            </div>
+                            <p>Aktivitas fisik yang kurang dapat menyebabkan penumpukan lemak dan kolesterol di arteri, meningkatkan risiko penyakit jantung koroner, serangan jantung, dan stroke.</p>
+                        </div>
+                        <div class="point-item">
+                            <div class="point-title">
+                                <span role="img" aria-label="Tekanan Darah Tinggi">⬆️</span>
+                                <strong>Hipertensi (Tekanan Darah Tinggi):</strong>
+                            </div>
+                            <p>Gaya hidup sedentari dapat mengganggu sirkulasi darah dan membuat jantung bekerja lebih keras, yang dapat meningkatkan tekanan darah.</p>
+                        </div>
+                        <div class="point-item">
+                            <div class="point-title">
+                                <span role="img" aria-label="Tulang">🦴</span>
+                                <strong>Osteoporosis:</strong>
+                            </div>
+                            <p>Kurangnya beban pada tulang akibat kurang gerak dapat menyebabkan penurunan kepadatan tulang dan meningkatkan risiko pengeroposan tulang.</p>
+                        </div>
+                        <div class="point-item">
+                            <div class="point-title">
+                                <span role="img" aria-label="Metabolisme">🧪</span>
+                                <strong>Gangguan Metabolisme:</strong>
+                            </div>
+                            <p>Kurang gerak dapat menyebabkan sindrom metabolik, yang meliputi peningkatan tekanan darah, kadar gula darah tinggi, kadar kolesterol abnormal, dan lemak perut berlebih.</p>
+                        </div>
+                        <div class="point-item">
+                            <div class="point-title">
+                                <span role="img" aria-label="Kanker">🦀</span>
+                                <strong>Kanker:</strong>
+                            </div>
+                            <p>Beberapa jenis kanker, seperti kanker usus besar, payudara, dan rahim, memiliki risiko lebih tinggi pada orang yang kurang aktif.</p>
+                        </div>
+                        <div class="point-item">
+                            <div class="point-title">
+                                <span role="img" aria-label="Sendi">🧍</span>
+                                <strong>Nyeri Sendi dan Punggung:</strong>
+                            </div>
+                            <p>Duduk terlalu lama dan kurang bergerak dapat menyebabkan kekakuan dan nyeri pada sendi serta melemahkan otot-otot penyangga punggung.</p>
+                        </div>
+                        <div class="point-item">
+                            <div class="point-title">
+                                <span role="img" aria-label="Lelah">😴</span>
+                                <strong>Mudah Lelah:</strong>
+                            </div>
+                            <p>Tubuh yang kurang aktif menjadi tidak terbiasa dengan gerakan, sehingga aktivitas ringan pun dapat terasa melelahkan.</p>
+                        </div>
+                        <div class="point-item">
+                            <div class="point-title">
+                                <span role="img" aria-label="Pencernaan">🚽</span>
+                                <strong>Konstipasi:</strong>
+                            </div>
+                            <p>Kurangnya aktivitas fisik dapat memperlambat gerakan usus dan menyebabkan masalah pencernaan.</p>
+                        </div>
+
+                    </div>
+                </div>
+            </li>
+            
+            <li class="summary-item" data-section="mental">
+                <div class="summary-title">
+                    <span class="emoji animate-bounce">😟</span>
+                    <span>Gangguan Mental</span>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </div>
+                <div class="summary-detail">
+                    <div class="detail-content">
+                        
+                        <div class="point-item">
+                            <div class="point-title">
+                                <span role="img" aria-label="Depresi">🌧️</span>
+                                <strong>Depresi dan Kecemasan:</strong>
+                            </div>
+                            <p>Aktivitas fisik dapat meningkatkan produksi endorfin, hormon yang memiliki efek positif pada suasana hati. Kurang gerak dapat meningkatkan risiko gangguan mental.</p>
+                        </div>
+                        <div class="point-item">
+                            <div class="point-title">
+                                <span role="img" aria-label="Kognitif">💡</span>
+                                <strong>Penurunan Fungsi Kognitif:</strong>
+                            </div>
+                            <p>Aktivitas fisik melancarkan aliran darah ke otak dan membantu memelihara fungsi kognitif. Kurang gerak dapat menyebabkan penurunan konsentrasi dan daya ingat.</p>
+                        </div>
+                        <div class="point-item">
+                            <div class="point-title">
+                                <span role="img" aria-label="Stres">😫</span>
+                                <strong>Stres:</strong>
+                            </div>
+                            <p>Kurang gerak dapat membuat seseorang lebih rentan terhadap stres dan perubahan suasana hati.</p>
+                        </div>
+
+                    </div>
+                </div>
+            </li>
+
+        </ul>
+
+        <section class="kesimpulan">
+            <h2>Kesimpulan Ringkas</h2>
+            <p>Kurang gerak mendatangkan kerugian finansial global ($67,5 miliar/tahun) dan meningkatkan risiko berbagai penyakit kronis (jantung, diabetes, kanker) serta gangguan mental (depresi, kecemasan). Tubuh bukan mesin yang bisa diam tanpa konsekuensi; setiap langkah adalah investasi untuk hidup yang lebih sehat, normal, dan bahagia.</p>
+            <p style="font-weight: bold; text-align: center; margin-top: 15px;">Ingat: Lebih baik bergerak tidak sempurna daripada diam sempurna!</p>
+        </section>
+        
+        <div class="navigation">
+            <a href="https://muin123-dr.github.io/kuncisehat/032.html" class="nav-btn"><i class="fas fa-arrow-left"></i> &nbsp; Kembali</a>
+            <a href="https://muin123-dr.github.io/kuncisehat/000.html" class="nav-btn">Daftar Isi</a>
+            <a href="https://muin123-dr.github.io/kuncisehat/030.html" class="nav-btn">Lanjut &nbsp; <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2023 Dampak Kurang Gerak</p>
+        <div class="social-links">
+            <a href="https://whatsapp.com/channel/0029VbAtZNp47Xe6JFu65N2u" class="social-btn whatsapp" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="https://www.instagram.com/dr.msmuin?igsh=MTY2NHZmODUydm1ycA==" class="social-btn instagram" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+        <div class="footer-logo-text">
+            <span class="gen-red">@Gen Z</span><span class="zehat-green">ehat</span> 2025
+        </div>
+        <div class="ikhtiar-text">
+            Ikhtiar Sehat merupakan bentuk Rasa Syukur
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const summaryItems = document.querySelectorAll('.summary-item');
+            
+            summaryItems.forEach(item => {
+                const title = item.querySelector('.summary-title');
+                const detail = item.querySelector('.summary-detail');
+
+                title.addEventListener('click', function() {
+                    // Toggle active class on clicked item
+                    item.classList.toggle('active');
+                    
+                    // Toggle show class on detail section
+                    detail.classList.toggle('show');
+                    
+                    // Close other open items
+                    summaryItems.forEach(otherItem => {
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                            otherItem.querySelector('.summary-detail').classList.remove('show');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
