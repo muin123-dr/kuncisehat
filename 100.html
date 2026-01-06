@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAKIT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #0c2461 0%, #1e3799 30%, #4a69bd 70%, #6a89cc 100%);
+        }
+        
+        /* Background dengan emoji dan ikon */
+        .background-icons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .icon {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.4;
+            animation: float 15s infinite linear;
+        }
+        
+        .icon:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; color: #ff6b6b; }
+        .icon:nth-child(2) { top: 20%; left: 85%; animation-delay: 1s; color: #ffd166; }
+        .icon:nth-child(3) { top: 70%; left: 10%; animation-delay: 2s; color: #06d6a0; }
+        .icon:nth-child(4) { top: 80%; left: 80%; animation-delay: 3s; color: #118ab2; }
+        .icon:nth-child(5) { top: 40%; left: 15%; animation-delay: 4s; color: #ef476f; }
+        .icon:nth-child(6) { top: 60%; left: 90%; animation-delay: 5s; color: #ff9a76; }
+        .icon:nth-child(7) { top: 30%; left: 75%; animation-delay: 6s; color: #9d4edd; }
+        .icon:nth-child(8) { top: 85%; left: 25%; animation-delay: 7s; color: #ff595e; }
+        .icon:nth-child(9) { top: 15%; left: 50%; animation-delay: 8s; color: #ffca3a; }
+        .icon:nth-child(10) { top: 65%; left: 60%; animation-delay: 9s; color: #8ac926; }
+        .icon:nth-child(11) { top: 25%; left: 30%; animation-delay: 10s; color: #1982c4; }
+        .icon:nth-child(12) { top: 75%; left: 40%; animation-delay: 11s; color: #6a4c93; }
+        
+        /* Animasi untuk ikon background */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(5deg); }
+            50% { transform: translateY(0) rotate(0deg); }
+            75% { transform: translateY(20px) rotate(-5deg); }
+        }
+        
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            flex-direction: column;
+            padding: 20px;
+        }
+        
+        /* Tombol Utama SAKIT */
+        .main-button {
+            font-size: 5rem;
+            padding: 40px 80px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.4);
+            font-weight: bold;
+            letter-spacing: 2px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: pulse 2s infinite alternate;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .main-button:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(255, 107, 107, 0.6);
+            background: linear-gradient(45deg, #ff5252, #ff3838);
+        }
+        
+        .main-button:active {
+            transform: translateY(-5px) scale(0.98);
+        }
+        
+        /* Animasi untuk tombol utama */
+        @keyframes pulse {
+            0% { box-shadow: 0 15px 35px rgba(255, 107, 107, 0.4); }
+            100% { box-shadow: 0 15px 45px rgba(255, 107, 107, 0.7); }
+        }
+        
+        /* Kontainer untuk tombol-tombol sub */
+        .sub-buttons-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 60px;
+            max-width: 1200px;
+        }
+        
+        /* Tombol Sub */
+        .sub-button {
+            font-size: 2.5rem;
+            padding: 25px 50px;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: bold;
+            opacity: 0;
+            transform: translateY(30px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Tombol sub yang aktif/tampil */
+        .sub-button.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Warna dan animasi berbeda untuk setiap tombol */
+        #bodyButton {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.4);
+        }
+        
+        #bodyButton:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(52, 152, 219, 0.6);
+            background: linear-gradient(45deg, #2980b9, #1f639b);
+        }
+        
+        #agentButton {
+            background: linear-gradient(45deg, #9b59b6, #8e44ad);
+            box-shadow: 0 10px 25px rgba(155, 89, 182, 0.4);
+        }
+        
+        #agentButton:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(155, 89, 182, 0.6);
+            background: linear-gradient(45deg, #8e44ad, #7d3c98);
+        }
+        
+        #environmentButton {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            box-shadow: 0 10px 25px rgba(46, 204, 113, 0.4);
+        }
+        
+        #environmentButton:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(46, 204, 113, 0.6);
+            background: linear-gradient(45deg, #27ae60, #219653);
+        }
+        
+        /* Efek kilatan saat tombol muncul */
+        @keyframes flash {
+            0% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.7); }
+            50% { box-shadow: 0 0 30px rgba(255, 255, 255, 0.9); }
+            100% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.7); }
+        }
+        
+        .sub-button.appear-effect {
+            animation: flash 0.8s ease-in-out;
+        }
+        
+        /* Efek partikel di dalam tombol */
+        .particle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+        }
+        
+        /* Responsif untuk perangkat mobile */
+        @media (max-width: 768px) {
+            .main-button {
+                font-size: 3rem;
+                padding: 25px 50px;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .sub-button {
+                font-size: 1.8rem;
+                padding: 20px 35px;
+            }
+            
+            .sub-buttons-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 30px;
+            }
+            
+            .icon {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-button {
+                font-size: 2.2rem;
+                padding: 20px 40px;
+            }
+            
+            .sub-button {
+                font-size: 1.5rem;
+                padding: 15px 30px;
+            }
+            
+            .icon {
+                font-size: 1.2rem;
+            }
+        }
+        
+        /* Animasi emoji di tombol */
+        .emoji {
+            display: inline-block;
+            animation: emojiBounce 2s infinite;
+        }
+        
+        @keyframes emojiBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* Efek khusus untuk tombol SAKIT */
+        .sick-emoji {
+            animation: sickSpin 3s infinite linear;
+        }
+        
+        @keyframes sickSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background dengan emoji dan ikon -->
+    <div class="background-icons">
+        <div class="icon">🤒</div>
+        <div class="icon">🦠</div>
+        <div class="icon">💊</div>
+        <div class="icon">🩺</div>
+        <div class="icon">❤️</div>
+        <div class="icon">🧬</div>
+        <div class="icon">🌡️</div>
+        <div class="icon">🧪</div>
+        <div class="icon">👨‍⚕️</div>
+        <div class="icon">🏥</div>
+        <div class="icon">💉</div>
+        <div class="icon">🧫</div>
+    </div>
+    
+    <!-- Kontainer utama -->
+    <div class="container">
+        <!-- Tombol utama SAKIT -->
+        <button id="mainButton" class="main-button">
+            <span class="emoji sick-emoji">🪫</span>
+            <span>SAKIT</span>
+            <span class="emoji sick-emoji">💊</span>
+        </button>
+        
+        <!-- Kontainer untuk tombol sub -->
+        <div class="sub-buttons-container">
+            <!-- Tombol Tubuh Kita -->
+            <button id="bodyButton" class="sub-button">
+                <span class="emoji">👤</span>
+                <span>Tubuh Kita</span>
+                <span class="emoji">💪</span>
+            </button>
+            
+            <!-- Tombol Agen -->
+            <button id="agentButton" class="sub-button">
+                <span class="emoji">🦠</span>
+                <span>Agen</span>
+                <span class="emoji">🧫</span>
+            </button>
+            
+            <!-- Tombol Lingkungan -->
+            <button id="environmentButton" class="sub-button">
+                <span class="emoji">🌍</span>
+                <span>Lingkungan</span>
+                <span class="emoji">🌳</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mainButton = document.getElementById('mainButton');
+            const bodyButton = document.getElementById('bodyButton');
+            const agentButton = document.getElementById('agentButton');
+            const environmentButton = document.getElementById('environmentButton');
+            
+            // Array urutan tombol yang akan muncul
+            const buttons = [bodyButton, agentButton, environmentButton];
+            let clickCount = 0;
+            
+            // Fungsi untuk membuat efek partikel
+            function createParticles(button, count) {
+                for (let i = 0; i < count; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    
+                    // Posisi acak dalam tombol
+                    const x = Math.random() * button.offsetWidth;
+                    const y = Math.random() * button.offsetHeight;
+                    
+                    // Ukuran acak
+                    const size = Math.random() * 10 + 5;
+                    
+                    // Atur properti partikel
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.left = `${x}px`;
+                    particle.style.top = `${y}px`;
+                    
+                    // Tambahkan ke tombol
+                    button.appendChild(particle);
+                    
+                    // Animasi partikel
+                    const duration = Math.random() * 1 + 0.5;
+                    particle.style.transition = `all ${duration}s ease-out`;
+                    
+                    // Mulai animasi
+                    setTimeout(() => {
+                        particle.style.opacity = '1';
+                        particle.style.transform = `translate(${Math.random() * 40 - 20}px, ${Math.random() * 40 - 20}px)`;
+                    }, 10);
+                    
+                    // Hapus partikel setelah animasi selesai
+                    setTimeout(() => {
+                        particle.style.opacity = '0';
+                        setTimeout(() => {
+                            if (button.contains(particle)) {
+                                button.removeChild(particle);
+                            }
+                        }, 500);
+                    }, duration * 800);
+                }
+            }
+            
+            // Fungsi untuk menampilkan tombol berikutnya
+            function showNextButton() {
+                if (clickCount < buttons.length) {
+                    const button = buttons[clickCount];
+                    
+                    // Tampilkan tombol dengan efek
+                    button.classList.add('active');
+                    
+                    // Tambahkan efek kilatan
+                    setTimeout(() => {
+                        button.classList.add('appear-effect');
+                        
+                        // Buat partikel
+                        createParticles(button, 15);
+                        
+                        // Hapus efek kilatan setelah selesai
+                        setTimeout(() => {
+                            button.classList.remove('appear-effect');
+                        }, 800);
+                    }, 300);
+                    
+                    // Tambahkan animasi emoji khusus untuk setiap tombol
+                    const emojis = button.querySelectorAll('.emoji');
+                    emojis.forEach((emoji, index) => {
+                        setTimeout(() => {
+                            emoji.style.transform = 'scale(1.5)';
+                            setTimeout(() => {
+                                emoji.style.transform = 'scale(1)';
+                            }, 300);
+                        }, index * 200);
+                    });
+                    
+                    clickCount++;
+                    
+                    // Jika semua tombol sudah ditampilkan, ubah tombol utama
+                    if (clickCount === buttons.length) {
+                        setTimeout(() => {
+                            mainButton.innerHTML = `
+                                <span class="emoji sick-emoji">🎉</span>
+                                <span>SAKIT!</span>
+                                <span class="emoji sick-emoji">🎊</span>
+                            `;
+                            mainButton.style.background = 'linear-gradient(45deg, #ff9a00, #ffcc00)';
+                            mainButton.style.boxShadow = '0 15px 35px rgba(255, 154, 0, 0.6)';
+                            
+                            // Tambahkan efek konfeti
+                            createParticles(mainButton, 30);
+                        }, 500);
+                    }
+                }
+            }
+            
+            // Event listener untuk tombol utama
+            mainButton.addEventListener('click', showNextButton);
+            
+            // Event listener untuk tombol sub
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Efek saat tombol sub diklik
+                    this.style.transform = 'scale(0.95)';
+                    createParticles(this, 20);
+                    
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                });
+            });
+            
+            // Tambahkan efek hover pada background ikon
+            const icons = document.querySelectorAll('.icon');
+            icons.forEach(icon => {
+                icon.addEventListener('mouseenter', function() {
+                    this.style.opacity = '0.8';
+                    this.style.transform = 'scale(1.3)';
+                });
+                
+                icon.addEventListener('mouseleave', function() {
+                    this.style.opacity = '0.4';
+                    this.style.transform = 'scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
